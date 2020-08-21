@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>
+    Emergency Kit /{% block title %}{% endblock %}
+  </title>
+  <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <link href="/static/assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="/static/assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
+  <link href="/static/assets/demo/demo.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+</head>
+
+{% block body %}
+<body class="" id="body">
+  <div class="wrapper">
+    <div class="sidebar position-fixed" style="background: #581b98;">
+      <div class="sidebar-wrapper">
+        <div class="logo">
+          <a href="javascript:void(0)" class="simple-text logo-mini">
+            PH
+          </a>
+          <a href="javascript:void(0)" class="simple-text logo-normal">
+            Emergency Kit
+          </a>
+        </div>
+        <ul class="nav">
+          <li>
+            <a href="javascript:void(0)" class="to_home">
+              <i class="tim-icons icon-istanbul"></i>
+              <p>Home</p>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" class="to_profile">
+              <i class="tim-icons icon-single-02"></i>
+              <p>Profile</p>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" class="to_notifications">
+              <i class="tim-icons icon-bell-55"></i>
+              <p>Notifications</p>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" class="to_dashboard">
+              <i class="tim-icons icon-chart-pie-36"></i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" class="to_announcement">
+              <i class="tim-icons icon-email-85"></i>
+              <p>Announcement</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="main-panel">
+      <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent" id="navbar">
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            <div class="navbar-toggle d-inline">
+              <button type="button" class="navbar-toggler btn togle_btn">
+                <i class="tim-icons icon-align-left-2" id="nav_icon"></i>
+              </button>
+            </div>
+            <a class="navbar-brand" href="javascript:void(0)">Emergency Kit</a>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navigation">
+            <ul class="navbar-nav ml-auto">
+              <li class="dropdown nav-item">
+                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                  <img src="/static/img/{{current_user.profile_image}}" class="current_user_img">
+                  <b class="caret d-none d-lg-block d-xl-block"></b>
+                  <p class="d-lg-none">
+                    Log out
+                  </p>
+                </a>
+                <ul class="dropdown-menu dropdown-navbar">
+                  <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Profile</a></li>
+                  <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Settings</a></li>
+                  <li class="dropdown-divider"></li>
+                  <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Log out</a></li>
+                </ul>
+              </li>
+              <li class="separator d-lg-none"></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      {% block body_content %}
+      {% endblock %}
+    </div>
+  </div>
+  <style>
+    .current_user_img{
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      position: relative !important;
+      vertical-align: middle !important;
+      display: block !important;
+    }
+    #nav_icon{
+      font-size: 26px;
+      color: aliceblue;
+    }
+    .togle_btn{
+      margin-left: -16px !important;
+      background: #0f0f20 !important;
+    }
+  </style>
+  <script src="/static/assets/js/core/jquery.min.js"></script>
+  <script src="/static/assets/js/core/popper.min.js"></script>
+  <script src="/static/assets/js/core/bootstrap.min.js"></script>
+  <script src="/static/assets/js/plugins/chartjs.min.js"></script>
+  <script src="/static/assets/js/plugins/bootstrap-notify.js"></script>
+  <script src="/static/assets/js/black-dashboard.min.js?v=1.0.0"></script>
+  <script src="/static/js/script.js"></script>
+</body>
+{% endblock %}
+</html>

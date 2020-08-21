@@ -1,0 +1,255 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body_content %}
+      <div class="content" id="content_body">
+        <div class="row">
+          <div class="col-12">
+            <div class="card incidence_board">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col-sm-6 text-left">
+                    <h5 class="card-category">Home Board</h5>
+                    <h2 class="card-title">Incidents</h2>
+                  </div>
+                  <div class="col-sm-6" id="checkins_col">
+                    <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                      <label class="btn btn-sm btn-primary btn-simple active" id="0">
+                        <input type="radio" name="options" checked>
+                        <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Announcements</span>
+                        <span class="d-block d-sm-none">
+                          <i class="tim-icons icon-single-02"></i>
+                        </span>
+                      </label>
+                      <label class="btn btn-sm btn-primary btn-simple" id="1">
+                        <input type="radio" class="d-none d-sm-none" name="options">
+                        <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Criticality</span>
+                        <span class="d-block d-sm-none">
+                          <i class="tim-icons icon-gift-2"></i>
+                        </span>
+                      </label>
+                      <label class="btn btn-sm btn-primary btn-simple" id="2">
+                        <input type="radio" class="d-none" name="options">
+                        <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Jebomism</span>
+                        <span class="d-block d-sm-none">
+                          <i class="tim-icons icon-tap-02"></i>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row" id="cases_row">
+                  <div class="d-flex justify-content-center inside_cases">
+                    <div class="col-sm cases_col">
+                      <div class="card cases_card to_uKit">
+                        <div class="card-body">
+                          <p class="cases_icon_main"><span class="fa fa-leaf cases_icons" id="ic1"></span></p>
+                          <h5 class="cases_text">Urgency Kit</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm cases_col">
+                      <div class="card cases_card to_robbery">
+                        <div class="card-body">
+                          <p class="cases_icon_main"><span class="fa fa-bomb cases_icons" id="ic2"></span></p>
+                          <h5 class="cases_text">Robbery Case</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm cases_col">
+                      <div class="card cases_card to_health">
+                        <div class="card-body">
+                          <p class="cases_icon_main"><span class="fa fa-hospital cases_icons" id="ic3"></span></p>
+                          <h5 class="cases_text">Health Issues</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm cases_col">
+                      <div class="card cases_card to_hunger">
+                        <div class="card-body">
+                          <p class="cases_icon_main"><span class="fa fa-globe cases_icons" id="ic4"></span></p>
+                          <h5 class="cases_text">Hunger Issues</h5>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card" style="background: #0f0f20;">
+              <div class="card-body">
+                <form method="POST" id="incident_form">
+                  <label>Select An Incident, Or Write A New One</label>
+                  <div class="form-group">
+                    <!----
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="tim-icons icon-single-02"></i>
+                      </div>      
+                    </div>----->
+                    <select id="incident" name="incident" class="form-control">
+                      <option value="earth_quake" class="g_option">Earth Quake</option>
+                      <option value="bomb_blast" class="g_option">Bomb Blast</option>
+                    </select>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <input type="" name="" class="form-control" placeholder="Write A New Incident" id="incident2">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <select id="location" name="location" class="form-control">
+                          <option value="null" disabled selected="selected">Select Your Community</option>
+                          <option value="ozuoba" class="g_option">Ozuoba</option>
+                          <option value="choba" class="g_option">Choba</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="btn btn-danger float-right" type="submit">Announce</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            {% for incidents in incidence %}
+            <div class="card ic_card">
+              <div class="card-body" style="margin-top: 15px;">
+                <h5>There was a(n) {{ incidents.name }} in {{incidents.location.title()}} at {{incidents.date_added.strftime('%d %b %Y, %I%p')}} </h5>
+                <div class="safe">
+                  <p>Identify Your Condition On this Disaster</p>
+
+                  <div class="form-check form-check-radio">
+                      <label class="form-check-label">
+                          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="safe" >
+                          Safe
+                          <span class="form-check-sign"></span>
+                      </label>
+                  </div>
+                  <div class="form-check form-check-radio">
+                      <label class="form-check-label">
+                          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="not_safe">
+                          Not Safe
+                          <span class="form-check-sign"></span>
+                      </label>
+                  </div>
+                  <div class="form-group">
+                    <button class="float-right incident_submit_btn" >submit</button>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <div class="card-footer" style="margin-top: -20px; margin-bottom: -10px;">
+                <p class="text-center">This incident was announced by <span style="font-weight: 400;">{{incidents.author.name}}</span> </p>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="card sec_cases_card">
+              <div class="card-header">
+                <h5 class="card-category">Death Cases</h5>
+                <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-primary"></i> 763,215</h3>
+              </div>
+              <div class="card-body">
+                <div class="chart-area">
+                  <canvas id="chartLinePurple"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="card sec_cases_card">
+              <div class="card-header">
+                <h5 class="card-category">Crime Cases</h5>
+                <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> 3,500</h3>
+              </div>
+              <div class="card-body">
+                <div class="chart-area">
+                  <canvas id="CountryChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="card sec_cases_card">
+              <div class="card-header">
+                <h5 class="card-category">Hunger Cases</h5>
+                <h3 class="card-title"><i class="tim-icons icon-globe-2 text-success"></i> 12,100</h3>
+              </div>
+              <div class="card-body">
+                <div class="chart-area">
+                  <canvas id="chartLineGreen"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<style>
+.ic_card{
+  background: #0f0f25;
+}
+.incident_submit_btn{
+  margin-bottom: -15px;
+  outline: 0px !important;
+  box-shadow: none !important;
+  border: 1px solid maroon;
+  padding: 5px 20px;
+  border-radius: 20px;
+  background: maroon;
+  color: aliceblue;
+  transition: 0.2s linear !important;
+  transition-delay: 0.2s !important;
+}
+.incident_submit_btn:hover{
+  background: darkred;
+  color: lavenderblush;
+  transition: 0.2s linear !important;
+  transition-delay: 0.2s !important;
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="/static/assets/js/core/jquery.min.js"></script>
+<script>
+  setInterval(function(){
+    var incident_text = $("#incident2").val();
+
+    if ( incident_text.length == 0 ){
+      $("#incident").removeAttr("disabled");
+    }else{
+      $("#incident").attr("disabled", "true");
+    }
+  }, 10);
+
+  $("#incident_form").on("submit", function(e){
+    e.preventDefault();
+
+    var incident_text = $("#incident2").val();
+    var location = $("#location").val();
+
+    req = $.ajax({
+      url: '/add_incidence',
+      type: 'post',
+      data: {name:incident_text, location:location}
+    });
+
+  });
+
+</script>
+{% endblock %}

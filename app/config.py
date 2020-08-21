@@ -1,0 +1,3 @@
+SECRET_KEY = b'k>\xeee\x00\x01v\xbaL\x06'
+SQLALCHEMY_DATABASE_URI = 'sqlite:///ozuoba.db'
+SQLALCHEMY_TRACK_MODIFICATIONS = False

@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body_content %}
+      <div class="content" id="content_body">
+        <div class="row">
+          <div class="col-md-5">
+            <div class="card card-user profile_card">
+              <div class="card-body">
+                <p class="card-text">
+                  <div class="author">
+                    <div class="block block-one"></div>
+                    <div class="block block-two"></div>
+                    <div class="block block-three"></div>
+                    <div class="block block-four"></div>
+                    <a href="javascript:void(0)">
+                      <img class="avatar" src="/static/img/{{current_user.profile_image}}" alt="...">
+                      <h5 class="title">{{current_user.name}}</h5>
+                    </a>
+                    <p class="description">
+                      Data Science
+                    </p>
+                  </div>
+                </p>
+                <div class="card-description bio_div">
+                  <h5 class="text-center bio_text">
+                  </h5>
+                  <div id="profile_locations">
+                    <p class="profile_location"><i class="tim-icons icon-compass-05"></i> Port Harcourt</p>
+                    <p class="profile_location"><i class="tim-icons icon-calendar-60"></i> {{current_user.date_joined.strftime('%dnd %b %Y')}}</p>
+                    <p class="profile_location"><i class="tim-icons icon-mobile"></i> 0{{current_user.number}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <div class="button-container">
+                  <button class="float-left msg_btn to_editprofile"> <i class="tim-icons icon-pencil"></i> Edit Your Profile</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7">
+            <div class="jumbotron profile_things">
+              <div class="row">
+                <div class="d-flex justify-content-center profile_case_row">
+                  <div class="profile_cases_col">
+                  </div>
+                  <div class="col-sm profile_cases_col">
+                    <div class="card profile_case">
+                      <div class="card-body">
+                        <p>Ask A Question</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm profile_cases_col">
+                    <div class="card profile_case">
+                      <div class="card-body">
+                        <p>Call For A Judgement</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm profile_cases_col">
+                    <div class="card profile_case">
+                      <div class="card-body">
+                        <p>Video Call With Nelson</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm profile_cases_col">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<style>
+.profile_card{
+	background: #0f0f20;
+	box-shadow: none;
+}
+
+.bio_div{
+	margin-top: 6px !important;
+	margin-bottom: -25px !important;
+}
+
+.bio_text{
+	font-size: 13px;
+}
+
+
+.msg_btn{
+	box-shadow: none !important;
+	background: #0f0f40 !important;
+	outline: 0px !important;
+	padding: 8px 35px;
+	border-radius: 5px;
+	border: 1px solid #0f0f20 !important;
+	transition: 0.2s linear !important;
+	transition-delay: 0.2s !important;
+	color: aliceblue;
+}
+
+.msg_btn:hover{
+	box-shadow: none !important;
+	background: #0f0f30 !important;
+	color: lavender;
+	transition: 0.2s linear !important;
+	transition-delay: 0.2s !important;
+}
+
+.profile_things{
+	background: #0f0f20;
+	border-radius: 1px;
+}
+
+.avatar{
+	border-color: #0f0f22 !important;
+}
+
+.profile_case{
+	background: radial-gradient(circle at 11.3% -0.8%, rgb(153, 14, 241) 0%, rgb(41, 3, 101) 100.2%);
+	cursor: pointer;
+	width: 8rem;
+	height: 5rem;
+}
+
+.profile_case_row{
+	margin-bottom: -32px !important;
+	margin-top: -5px !important;
+	overflow-x: scroll;
+	width: 100% !important;
+	padding-left: auto !important;
+}
+
+.profile_case_row::-webkit-scrollbar{
+	height: 10px !important;
+	margin-top: -20px !important;
+}
+.profile_case_row::-webkit-scrollbar-track{
+	background: #0f0f25;
+	border: 1px solid #0f0f30;
+}
+.profile_case_row::-webkit-scrollbar-thumb{
+	background: radial-gradient(circle at 10% 20%, rgb(15, 72, 223) 0%, rgb(24, 41, 80) 81.1%);
+}
+
+
+#profile_locations{
+	margin-left: 10px;
+}
+
+#profile_locations i{
+	margin-right: 5px;
+}
+
+#profile_locations p{
+	font-weight: 400;
+	color: lavenderblush;
+	margin-top: -6px;
+}
+
+.msg_btn i{
+	font-size: 18px;
+	margin-right: 5px;
+}
+
+.profile_cases_col{
+	margin-left: 25px;
+	margin-right: 10px;
+}
+
+// @media(max-width: 620px){
+	
+} 
+</style>
+
+<script src="/static/assets/js/core/jquery.min.js"></script>
+<script>
+$(".to_editprofile").on("click", function(){
+	history.pushState("", "", "/edit/profile");
+	$("#body").load(location.href + "#body");
+  $("#body").load(location.href + "#navbar");
+});
+</script>
+{% endblock %}

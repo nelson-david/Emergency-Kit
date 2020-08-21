@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block body_content %}
+	<div class="content">
+		<div class="row">
+          <div class="col-md-8">
+            <div class="card" style="background: #0f0f20;">
+              <div class="card-header">
+                <h5 class="title">Edit Profile</h5>
+              </div>
+              <div class="card-body">
+                <form method="POST" id="edit_form">
+                  <div class="row">
+                    <div class="col-md-6 pr-md-1">
+                      <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" class="form-control" placeholder="Full Name" id="name" value="{{current_user.name}}">
+                      </div>
+                    </div>
+                    <div class="col-md-6 pl-md-1">
+                      <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="number" class="form-control" placeholder="Phone Number" id="number" value="0{{current_user.number}}">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" class="form-control" placeholder="Home Address" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09" id="location">
+                      </div>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-fill btn-primary save_btn" id="save_btn">Save</button>
+                </form>
+              </div>
+              <div class="card-footer">
+              </div>
+            </div>
+          </div>
+		</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script>
+	    setInterval(function(){
+	    	var number = $("#number").val();
+	    	var name = $("#name").val();
+
+	    	if (number.length != 11 || name.length < 5){
+	    		$(".save_btn").attr("disabled", "true");
+	    	}else{
+	    		$(".save_btn").removeAttr("disabled");
+	    	}
+	    }, 10);
+
+		$("#edit_form").on("submit", function(e){
+			e.preventDefault();
+
+			var name = $("#name").val();
+			var number = $("#number").val();
+
+			req = $.ajax({
+				url: '/update_profile',
+				type: 'post',
+				data: {name:name, number:number},
+				success: function(){
+					history.pushState("", "", "/profile");
+					$("#body").load(location.href + "#body");
+          $("#body").load(location.href + "#navbar");
+				}
+			});
+		});
+	</script>
+{% endblock %}

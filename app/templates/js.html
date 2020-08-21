@@ -1,0 +1,19 @@
+<script>
+$(window).on("popstate", function(){
+      $("#body").load(location.href + "#body");
+      $("#body").load(location.href + "#navbar");
+})
+$(".to_home").on("click", function(){
+      history.pushState("", "", "/");
+      $("#body").load(location.href + "#body");
+      $("#body").load(location.href + "#navbar");
+});
+$(".to_login").on("click", function(){
+	history.pushState("", "", "/login");
+	$("#body").load(location.href + "#body");
+});
+$(".to_register").on("click", function(){
+	history.pushState("", "", "/register");
+	$("#body").load(location.href + "#body");
+});
+</script>

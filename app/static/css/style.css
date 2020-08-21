@@ -1,0 +1,412 @@
+body::-webkit-scrollbar{
+	width: 10px !important;
+	margin-top: -20px !important;
+}
+body::-webkit-scrollbar-track{
+	background: #002651;
+}
+body::-webkit-scrollbar-thumb{
+	background: radial-gradient(circle at 10% 20%, rgb(15, 72, 223) 0%, rgb(24, 41, 80) 81.1%);
+	cursor: pointer !important;
+	border-radius: 10px;
+}
+
+.incidence_board{
+	background: #0e153a;
+}
+.cases_card{
+	background: radial-gradient(circle at 11.3% -0.8%, rgb(153, 14, 241) 0%, rgb(41, 3, 101) 100.2%);
+	box-shadow: none !important;
+	border-radius: 10px;
+}
+
+.cases_icons{
+	font-size: 30px;
+	color: aliceblue;
+	padding: 20px 20px !important;
+	background: transparent;
+	border-radius: 15px;
+	box-shadow: 0px 2px 10px black;
+	cursor: pointer;
+}
+
+.sidebar{
+	height: 640px !important;
+}
+
+.inside_cases{
+	margin-bottom: -32px !important;
+	margin-top: -5px !important;
+	overflow-x: scroll;
+	width: 100% !important;
+	display: flex !important;
+}
+.inside_cases::-webkit-scrollbar{
+	height: 3px !important;
+	margin-top: -20px !important;
+}
+.inside_cases::-webkit-scrollbar-track{
+	background: #002651;
+}
+.inside_cases::-webkit-scrollbar-thumb{
+	background: radial-gradient(circle at 10% 20%, rgb(15, 72, 223) 0%, rgb(24, 41, 80) 81.1%);
+}
+
+.sec_cases_card{
+	// background: linear-gradient(to top, #6441A5 0%, #2a0845 100%);
+	background: linear-gradient(to top, #0e153a 0%, #182848 100%);
+}
+
+
+.mainbody_login{
+	margin-top: 60px;
+}
+
+.login_text{
+	font-size: 23px;
+}
+
+.login_card{
+	background: #0f0f24;
+	border-radius: 2px;
+}
+
+#login_sep{
+	margin-top: -16px;
+	background: aliceblue;
+}
+
+.login_inputs{
+	color: lavenderblush;
+}
+
+.login_inputs::placeholder{
+	color: aliceblue;
+}
+.login_btn{
+	border-radius: 5px;
+	background: linear-gradient(to right, rgb(173, 83, 137), rgb(60, 16, 83)) !important;
+}
+.login_btn:hover{
+	background: linear-gradient(to right, rgb(173, 83, 137), rgb(60, 16, 83)) !important;
+}
+.login_btn:focus{
+	background: linear-gradient(to right, rgb(173, 83, 137), rgb(60, 16, 83)) !important;
+}
+
+.no_account{
+	margin-top: -25px;
+	margin-right: 25px;
+}
+
+
+.login_body{
+	background: #0f0f20;
+}
+
+
+#gender{
+	margin-bottom: 10px;
+}
+
+#gender:focus{
+	color: #999999;
+}
+
+
+
+#warning{
+	color: #e60626;
+	margin-left: 6px;
+}
+
+
+
+
+
+
+
+
+@media(max-width: 1280px){
+	.inside_cases{
+		padding-left: 50px;
+	}
+}
+@media(max-width: 1200px){
+	.inside_cases{
+		padding-left: 35px;
+	}
+}
+@media(max-width: 1150px){
+	.inside_cases{
+		padding-left: 25px;
+	}
+}
+@media(max-width: 1090px){
+	.inside_cases{
+		padding-left: 18px;
+	}
+}
+@media(max-width: 1060px){
+	.inside_cases{
+		padding-left: 0px;
+	}
+	.cases_card{
+		width: 160px;
+		height: 160px;
+	}
+}
+
+@media(max-width: 1040px){
+	.inside_cases{
+		padding-left: 0px;
+	}
+	.cases_card{
+		width: 150px;
+		height: 150px;
+	}
+}
+
+@media(max-width: 991px){
+	.inside_cases{
+		padding-left: 25px;
+	}
+}
+
+@media(max-width: 875px){
+	.inside_cases{
+		padding-left: 15px;
+	}
+}
+
+@media(max-width: 845px){
+	.inside_cases{
+		padding-left: 10px;
+	}
+}
+
+@media(max-width: 740px){
+	.inside_cases{
+		padding-left: 10px;
+	}
+	.cases_card{
+		width: 140px;
+		height: 130px;
+	}
+}
+
+@media(max-width: 690px){
+	.inside_cases{
+		padding-left: 20px;
+	}
+}
+
+
+@media(max-width: 680px){
+	.inside_cases{
+		padding-left: 30px;
+	}
+}
+
+@media(max-width: 660px){
+	.inside_cases{
+		padding-left: 45px;
+	}
+}
+@media(max-width: 650px){
+	.inside_cases{
+		padding-left: 60px;
+	}
+}
+
+@media(max-width: 640px){
+	.inside_cases{
+		padding-left: 85px;
+	}
+}
+
+@media(max-width: 610px){
+	.inside_cases{
+		padding-left: 110px;
+	}
+}
+
+@media(max-width: 585px){
+	.inside_cases{
+		padding-left: 130px;
+	}
+}
+
+@media(max-width: 575px){
+	#checkins_col{
+		margin-top: -43px;
+	}
+}
+
+@media(max-width: 565px){
+	.inside_cases{
+		padding-left: 150px;
+	}
+}
+
+@media(max-width: 550px){
+	.inside_cases{
+		padding-left: 160px;
+	}
+}
+
+@media(max-width: 540px){
+	.inside_cases{
+		padding-left: 170px;
+	}
+}
+
+@media(max-width: 525px){
+	.inside_cases{
+		padding-left: 190px;
+	}
+}
+
+@media(max-width: 505px){
+	.inside_cases{
+		padding-left: 200px;
+	}
+}
+
+@media(max-width: 495px){
+	.inside_cases{
+		padding-left: 220px;
+	}
+}
+
+@media(max-width: 485px){
+	.inside_cases{
+		padding-left: 240px;
+	}
+}
+@media(max-width: 455px){
+	.no_account{
+		margin-top: 13px;
+		margin-right: -4px;
+	}
+}
+
+@media(max-width: 428px){
+	.inside_cases{
+		padding-left: 235px;
+	}
+}
+
+@media(max-width: 419px){
+	.inside_cases{
+		padding-left: 230px;
+	}
+}
+
+@media(max-width: 410px){
+	.inside_cases{
+		padding-left: 225px;
+	}
+}
+
+@media(max-width: 405px){
+	.inside_cases{
+		padding-left: 217px;
+		margin-right: 8px;
+	}
+}
+
+@media(max-width: 400px){
+	.inside_cases{
+		padding-left: 214px;
+	}
+}
+
+@media(max-width: 396px){
+	.inside_cases{
+		padding-left: 213px;
+	}
+	.cases_card{
+		width: 134px;
+		height: 120px;
+	}
+}
+
+@media(max-width: 392px){
+	.inside_cases{
+		padding-left: 210px;
+	}
+	#ic3{
+		padding: 20px 27px !important;
+	}
+}
+
+
+@media(max-width: 388px){
+	.inside_cases{
+		padding-left: 205px;
+	}
+}
+
+
+@media(max-width: 383px){
+	.inside_cases{
+		margin-left: -1px;
+	}
+}
+
+@media(max-width: 380px){
+	.cases_card{
+		width: 125px;
+		height: 115px;
+	}
+	.inside_cases{
+		margin-left: -4px;
+	}
+}
+
+@media(max-width: 370px){
+	.inside_cases{
+		margin-left: -10px;
+	}
+}
+
+@media(max-width: 365px){
+	.inside_cases{
+		margin-left: -15px;
+	}
+	.cases_card{
+		width: 123px;
+		height: 115px;
+	}
+	.cases_text{
+		margin-bottom: 15px !important;
+	}
+}
+
+@media(max-width: 362px){
+	.inside_cases{
+		margin-left: -2px;
+	}
+	.cases_col{
+		margin-right: 15px !important;
+	}
+}
+
+@media(max-width: 355px){
+	.inside_cases{
+		margin-left: -6px;
+	}
+	.cases_col{
+		margin-right: 15px !important;
+	}
+}
+
+@media(max-width: 350px){
+	.inside_cases{
+		margin-left: -6px;
+	}
+	.cases_col{
+		margin-right: 15px !important;
+	}
+}

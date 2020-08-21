@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+<body id="body" class="login_body">
+  <div class="container">
+    <div class="mainbody_login">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="jumbotron login_card">
+            <div class="">
+              <div class="alert_div">
+              </div>
+              <h5 class="login_text">Sign In</h5>
+              <hr id="login_sep">
+              <form method="POST">
+                <div class="form-group">
+                  <label for="number">Phone Number : </label>
+                  <input type="" name="" class="form-control login_inputs" placeholder="Enter Your Phone Number" id="number">
+                </div>
+                <div class="form-group">
+                  <label for="password">Password : </label>
+                  <input type="" name="" class="form-control login_inputs" placeholder="Enter Your Password" id="password">
+                  <div class="warning_div">
+                  </div>
+                </div>
+                <button type="submit" class="btn login_btn">Sign In</button>
+                <h5 class="text-right no_account">Don't have an account? <a href="javascript:void(0)" class="to_register">create one</a></h5>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <style>
+  .validation_alert{
+    margin-top: -30px !important;
+    border-radius: 4px !important;
+    background: darkred !important;
+  }
+  </style>
+  <script src="/static/assets/js/core/jquery.min.js"></script>
+  <script src="/static/assets/js/core/popper.min.js"></script>
+  <script src="/static/assets/js/core/bootstrap.min.js"></script>
+  <script src="/static/assets/js/plugins/chartjs.min.js"></script>
+  <script src="/static/assets/js/plugins/bootstrap-notify.js"></script>
+  <script src="/static/assets/js/black-dashboard.min.js?v=1.0.0"></script>
+  <script src="/static/js/script.js"></script>
+
+  <script>
+    setInterval(function(){
+      var number = $("#number").val();
+
+      if (number.length != 11){
+        $(".login_btn").attr("disabled", "true");
+      }else{
+        $(".login_btn").removeAttr("disabled");
+      }
+    }, 10);
+    $("form").on("submit", function(e){
+      e.preventDefault();
+      var password = $("#password").val();
+
+      if (password.length < 10 ){
+        $("#warning").remove();
+        $(".warning_div").append('<h5 id="warning">invalid password</h5>')
+      }else{
+        $("#warning").remove();
+        var password = $("#password").val();
+        var number = $("#number").val();
+
+        req = $.ajax({
+          url: '/auth_user',
+          type: 'post',
+          data: {password:password, number:number},
+          success: function(data){
+            if (data.error == 'no'){
+              history.pushState("", "", "/");
+              $("#body").load(location.href + "#body");
+            }else{
+              $("#password").val('');
+              $("#number").val('');
+              $(".validation_alert").remove();
+              $('.alert_div').append('<div class="alert alert-warning alert-with-icon validation_alert" data-notify="container"><button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close"><i class="tim-icons icon-simple-remove"></i></button><span data-notify="icon" class="tim-icons icon-bell-55"></span><span data-notify="message">Invalid Phone Number or Password</span></div>');
+            }
+          }
+        })
+      }
+    })
+  </script>
+</body>
+{% endblock %}

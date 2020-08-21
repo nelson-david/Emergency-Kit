@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %} Register {% endblock %}
+
+{% block body %}
+<body id="body" class="login_body">
+  <div class="container">
+    <div class="mainbody_login">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="jumbotron login_card">
+            <div class="">
+              <h5 class="login_text">Sign Up</h5>
+              <hr id="login_sep">
+              <form method="POST">
+                <div class="form-group">
+                  <label for="name">Full Name : </label>
+                  <input type="" name="" class="form-control login_inputs" placeholder="Enter Your Full Name" id="name">
+                </div>
+                <div class="form-group">
+                  <label for="number">Phone Number : </label>
+                  <input type="number" name="" class="form-control login_inputs" placeholder="Enter Your Phone Number" id="number">
+                </div>
+                <div class="form-group">
+                  <label for="gender">Gender : </label>
+                  <select id="gender" name="gender" class="form-control">
+                    <option value="male" class="g_option">Male</option>
+                    <option value="female" class="g_option">Female</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                	<label for="password">Password : </label>
+                	<input type="" name="" class="form-control login_inputs" placeholder="Enter Your Password" id="password">
+                	<div class="warning_div">
+                	</div>
+                </div>
+                <button type="submit" class="btn login_btn">Sign Up</button>
+                <h5 class="text-right no_account">Already have an account? <a href="javascript:void(0)" class="to_login">sign in</a></h5>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="/static/assets/js/core/popper.min.js"></script>
+  <script src="/static/assets/js/core/bootstrap.min.js"></script>
+  <script src="/static/assets/js/plugins/bootstrap-notify.js"></script>
+  <script src="/static/assets/js/black-dashboard.min.js?v=1.0.0"></script>
+  <script src="/static/js/script.js"></script>
+
+  <script>
+  	setInterval(function(){
+  		var number = $("#number").val();
+      var name = $("#name").val();
+
+  		if (number.length != 11 || name < 4 ){
+  			$(".login_btn").attr("disabled", "true");
+  		}else{
+  			$(".login_btn").removeAttr("disabled");
+  		}
+  	}, 10);
+  	$("form").on("submit", function(e){
+  		e.preventDefault();
+  		var password = $("#password").val();
+
+  		if (password.length < 10 ){
+  			$("#warning").remove();
+  			$(".warning_div").append('<h5 id="warning">password must not be less than 10 characters</h5>')
+  		}else{
+  			$("#warning").remove();
+	  		var password = $("#password").val();
+	  		var number = $("#number").val();
+	  		var gender = $("#gender").val();
+        var name = $("#name").val()
+
+	  		req = $.ajax({
+	  			url: '/add_user',
+	  			type: 'post',
+	  			data: {password:password, number:number, gender:gender, name:name},
+	  			success: function(){
+            history.pushState("", "", "/login");
+            $("#body").load(location.href + "#body");
+	  			},
+	  			error: function(){
+	  				
+	  			}
+	  		})
+  		}
+  	})
+  </script>
+</body>
+{% endblock %}
