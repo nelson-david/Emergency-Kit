@@ -39,20 +39,20 @@
 										<h5 class="user_users_cred">Joined: {{user.date_joined.strftime('%dnd %b %Y')}} </h5>
 										<h5 class="user_users_cred">Gender: {{user.gender.title()}} </h5>
 										<h5 class="user_users_cred">Number: 0{{user.number}} </h5>
-									    <div class="form-check float-right">
+										{% if user.gender == 'male' %}
+											<a href="" class="cred_link">view his complete details </a>
+										{% else %}
+											<a href="" class="cred_link">view her complete details </a>
+										{% endif %}
+									    <div class="form-check float-right user_users_check">
 									        <label class="form-check-label">
-									            <input class="form-check-input user_users_check" type="checkbox" value="">
+									            <input class="form-check-input" type="checkbox" value="">
 									            Suspend This Account
 									            <span class="form-check-sign">
 									                <span class="check"></span>
 									            </span>
 									        </label>
 									    </div>
-										{% if user.gender == 'male' %}
-											<a href="" class="cred_link">view his complete details </a>
-										{% else %}
-											<a href="" class="cred_link">view her complete details </a>
-										{% endif %}
 									</div>
 								</div>
 							</div>
