@@ -21,6 +21,8 @@ class User(UserMixin, db.Model):
 	profile_image = db.Column(db.String(), nullable=False, default="default.jpg")
 	user_type = db.Column(db.String(), nullable=False, default="citizen")
 	date_joined = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
+	account_pend = db.Column(db.String(), nullable=True)
+	date_pended = db.Column(db.DateTime(), nullable=True)
 	incidence = db.relationship("Incidence", backref="author", lazy=True)
 	safe = db.relationship("Safe", backref="marker", lazy=True)
 

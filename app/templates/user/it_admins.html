@@ -1,0 +1,175 @@
+<div class="content" id="content_body">
+	<div class="row">
+		<div class="col-12">
+			<div class="card dashboard_card">
+				<div class="card-body">
+					<div class="d-flex justify-content-center internal_card">
+						<a href="javascript:void(0)" class="admin_dashboard" id="toggle_incidents">Incidents</a>
+						<a href="javascript:void(0)" class="admin_dashboard" id="toggle_users">Users</a>
+						<a href="javascript:void(0)" class="admin_dashboard" id="toggle_admins">Admins</a>
+						<a href="javascript:void(0)" class="admin_dashboard" id="toggle_settings">Settings</a>
+						<a href="javascript:void(0)" class="admin_dashboard" id="toggle_updates">Updates</a>
+						<a href="javascript:void(0)" class="admin_dashboard" id="toggle_issues">Issues</a>
+					</div>
+				</div>
+			</div>
+			<div class="jumbotron main_dashboard">
+				<div class="incidents">
+					<div class="row">
+						{% for incidents in incidence %}
+							<div class="col-md-6">
+								<div class="card incidents_card">
+									<div class="card-body">
+										<h5>A(n) {{incidents.name}} occured in Ozuoba at {{incidents.date_added.strftime('%d %b %Y, %I%p')}} </h5>
+
+										<p> {{incidents.likers.count()}} Person(s) where affected by the incidence   <a href="/in"> view details </a></p>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="users">
+					<div class="row">
+						{% for user in citizens %}
+							<div class="col-md-6">
+								<div class="card users_card">
+									<div class="card-body">
+										<h5 class="user_users_cred">Name: {{user.name}}</h5>
+										<h5 class="user_users_cred">Joined: {{user.date_joined.strftime('%dnd %b %Y')}} </h5>
+										<h5 class="user_users_cred">Gender: {{user.gender.title()}} </h5>
+										<h5 class="user_users_cred">Number: 0{{user.number}} </h5>
+										{% if user.gender == 'male' %}
+											<a href="" class="cred_link">view his complete details </a>
+										{% else %}
+											<a href="" class="cred_link">view her complete details </a>
+										{% endif %}
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="admins">
+					<div class="row">
+						{% for user in admins %}
+							<div class="col-md-6">
+								<div class="card admins_card">
+									<div class="card-body">
+										<h5>{{user.name}}</h5>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+.dashboard_card{
+	background: #0f0f25;
+}
+.internal_card{
+	margin-bottom: -32px !important;
+	margin-top: -5px !important;
+	overflow-x: scroll;
+	width: 100% !important;
+	display: flex !important;
+}
+.internal_card::-webkit-scrollbar{
+	height: 3px !important;
+	margin-top: -20px !important;
+}
+.internal_card::-webkit-scrollbar-track{
+	background: transparent;
+}
+.internal_card::-webkit-scrollbar-thumb{
+	background: transparent;
+}
+.admin_dashboard{
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-bottom: 30px !important;
+	margin-top: 7px !important;
+	text-transform: uppercase;
+	color: aliceblue;
+	transition: 0.4s linear;
+	transition-delay: 0.2s;
+}
+.admin_dashboard:hover{
+	color: lavenderblush;
+	transition: 0.4s linear;
+	transition-delay: 0.2s;
+}
+.main_dashboard{
+	border-radius: 3px;
+	background: #0f0f20;
+	margin-top: -20px;
+}
+.incidents_card{
+	background: radial-gradient(circle at 11.3% -0.8%, rgb(153, 14, 241) 0%, rgb(41, 3, 101) 100.2%);
+	box-shadow: none !important;
+}
+.users_card{
+	background: radial-gradient(circle at 11.3% -0.8%, rgb(153, 14, 241) 0%, rgb(41, 3, 101) 100.2%);
+	box-shadow: none !important;
+}
+.admins_card{
+	background: radial-gradient(circle at 11.3% -0.8%, rgb(153, 14, 241) 0%, rgb(41, 3, 101) 100.2%);
+	box-shadow: none !important;
+}
+.user_users_cred{
+	margin-bottom: 5px;
+	font-size: 14px;
+	color: #070707 !important;
+}
+.cred_link{
+	color: #f0f0f0 !important;
+	transition: 0.2s linear !important;
+	transition-delay: 0.2s !important;
+}
+.cred_link:hover{
+	color: #cabbe9 !important;
+	transition: 0.2s linear !important;
+	transition-delay: 0.2s !important;
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(".users").hide();
+$(".admins").hide();
+$("#toggle_incidents").css("color", "blue");
+
+
+$("#toggle_users").on("click", function(){
+	$(".incidents").fadeOut(350, function(){
+		$(".admins").fadeOut(1);
+		$("#toggle_incidents").css("color", "aliceblue");
+		$(this).css("color", "blue");
+		$(".users").fadeIn(350);
+	});
+});
+
+$("#toggle_incidents").on("click", function(){
+	$(".users").fadeOut(350, function(){
+		$(".admins").fadeOut(1);
+		$("#toggle_users").css("color", "aliceblue");
+		$(this).css("color", "blue");
+		$(".incidents").fadeIn(350);
+	});
+});
+
+$("#toggle_admins").on("click", function(){
+	$(".users").fadeOut(350, function(){
+		$(".incidents").fadeOut(1);
+		$("#toggle_users").css("color", "aliceblue");
+		$(this).css("color", "blue");
+		$(".admins").fadeIn(350);
+	});
+});
+
+</script>

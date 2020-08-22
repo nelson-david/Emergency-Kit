@@ -2,14 +2,17 @@ from app import app, db
 from flask import redirect, url_for, render_template, request, jsonify
 from flask_login import current_user
 
-from app.models import Incidence
+from app.models import Incidence, User
 
 @app.route('/')
 @app.route('/home')
 def home():
 	if current_user.is_authenticated:
+		citizens = User.query.filter_by(user_type="citizen").order_by(User.date_joined.desc()).all()
+		admins = User.query.filter_by(user_type="it_admin").order_by(User.date_joined.desc()).all()
 		incidence = Incidence.query.order_by(Incidence.date_added.desc()).all()
-		return render_template('user/home.html', incidence=incidence)
+		return render_template('user/home.html', incidence=incidence, citizens=citizens,\
+			admins=admins)
 	else:
 		return redirect(url_for('login'))
 
