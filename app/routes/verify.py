@@ -26,7 +26,8 @@ def add_user():
 	new_user = User(name=name, number=number, password=password, gender=gender)
 
 	hash_password = bcrypt.generate_password_hash(password).decode('utf-8')
-	new_user = User(name=name, number=number, password=hash_password, gender=gender)
+	new_user = User(name=name, number=number, password=hash_password, user_type=account_type,\
+		gender=gender)
 	db.session.add(new_user)
 	db.session.commit()
 
