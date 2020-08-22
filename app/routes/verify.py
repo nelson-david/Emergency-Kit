@@ -22,6 +22,7 @@ def add_user():
 	number = request.form["number"]
 	password = request.form["password"]
 	gender = request.form["gender"]
+	account_type = request.form['account_type']
 
 	new_user = User(name=name, number=number, password=password, gender=gender)
 
