@@ -1,11 +1,16 @@
 from app import db, login_manager
 from flask_login import UserMixin
+from datetime import datetime
 
 @login_manager.user_loader
 def load_user(id):
 	return User.query.get(int(id))
 
-from datetime import datetime
+class Safeornot(db.Model):
+	__tablename__ = "wishlists"
+	wishlister_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+	wishlisted_id = db.Column(db.Integer, db.ForeignKey('post.id'), primary_key=True)
+	timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
 class User(UserMixin, db.Model):
 	id = db.Column(db.Integer, primary_key=True, unique=True)
