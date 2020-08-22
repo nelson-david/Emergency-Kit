@@ -39,6 +39,15 @@
 										<h5 class="user_users_cred">Joined: {{user.date_joined.strftime('%dnd %b %Y')}} </h5>
 										<h5 class="user_users_cred">Gender: {{user.gender.title()}} </h5>
 										<h5 class="user_users_cred">Number: 0{{user.number}} </h5>
+									    <div class="form-check float-right">
+									        <label class="form-check-label">
+									            <input class="form-check-input user_users_check" type="checkbox" value="">
+									            Suspend This Account
+									            <span class="form-check-sign">
+									                <span class="check"></span>
+									            </span>
+									        </label>
+									    </div>
 										{% if user.gender == 'male' %}
 											<a href="" class="cred_link">view his complete details </a>
 										{% else %}
@@ -56,7 +65,19 @@
 							<div class="col-md-6">
 								<div class="card admins_card">
 									<div class="card-body">
-										<h5>{{user.name}}</h5>
+										<h5 class="user_users_cred">Name: {{user.name}}</h5>
+										<h5 class="user_users_cred">Joined: {{user.date_joined.strftime('%dnd %b %Y')}} </h5>
+										<h5 class="user_users_cred">Gender: {{user.gender.title()}} </h5>
+										<h5 class="user_users_cred">Number: 0{{user.number}} </h5>
+										{% if user == current_user%}
+											<a href="" class="cred_link">view your profile </a>
+										{% else %}
+											{% if user.gender == 'male' %}
+												<a href="" class="cred_link">view his complete details </a>
+											{% else %}
+												<a href="" class="cred_link">view her complete details </a>
+											{% endif %}
+										{% endif %}
 									</div>
 								</div>
 							</div>
@@ -135,6 +156,9 @@
 	color: #cabbe9 !important;
 	transition: 0.2s linear !important;
 	transition-delay: 0.2s !important;
+}
+.user_users_check{
+	
 }
 </style>
 
