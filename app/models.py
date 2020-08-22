@@ -14,6 +14,7 @@ class User(UserMixin, db.Model):
 	gender = db.Column(db.String(), nullable=False)
 	password = db.Column(db.String(), nullable=False)
 	profile_image = db.Column(db.String(), nullable=False, default="default.jpg")
+	user_type = db.Column(db.String(), nullable=False, default="citizen")
 	date_joined = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
 	incidence = db.relationship("Incidence", backref="author", lazy=True)
 	safe = db.relationship("Safe", backref="marker", lazy=True)

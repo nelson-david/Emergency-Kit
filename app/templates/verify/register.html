@@ -29,6 +29,15 @@
                   </select>
                 </div>
                 <div class="form-group">
+                  <label for="account_type">Account Type : </label>
+                  <select id="account_type" name="account_type" class="form-control">
+                    <option value="citizen" class="g_option">Citizen</option>
+                    <option value="civil_servant" class="g_option">Civil Servant</option>
+                    <option value="governor" class="g_option">Governor</option>
+                    <option value="it_admin" class="g_option">IT Admin</option>
+                  </select>
+                </div>
+                <div class="form-group">
                 	<label for="password">Password : </label>
                 	<input type="" name="" class="form-control login_inputs" placeholder="Enter Your Password" id="password">
                 	<div class="warning_div">
@@ -73,12 +82,13 @@
 	  		var password = $("#password").val();
 	  		var number = $("#number").val();
 	  		var gender = $("#gender").val();
-        var name = $("#name").val()
+        var name = $("#name").val();
+        var account_type = $("#account_type").val()
 
 	  		req = $.ajax({
 	  			url: '/add_user',
 	  			type: 'post',
-	  			data: {password:password, number:number, gender:gender, name:name},
+	  			data: {password:password, number:number, gender:gender, name:name, account_type:account_type},
 	  			success: function(){
             history.pushState("", "", "/login");
             $("#body").load(location.href + "#body");
