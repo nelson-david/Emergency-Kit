@@ -11,6 +11,15 @@
           <div class="jumbotron login_card">
             <div class="">
               <div class="alert_div">
+                {% for message in get_flashed_messages() %}
+                  <div class="alert alert-warning alert-with-icon validation_alert" data-notify="container">
+                    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                      <i class="tim-icons icon-simple-remove"></i>
+                    </button>
+                    <span data-notify="icon" class="tim-icons icon-bell-55"></span>
+                    <span data-notify="message">{{message}}</span>
+                  </div>
+                {% endfor %}
               </div>
               <h5 class="login_text">Sign In</h5>
               <hr id="login_sep">
@@ -79,12 +88,20 @@
             if (data.error == 'no'){
               history.pushState("", "", "/");
               $("#body").load(location.href + "#body");
-            }else{
+            }
+            if (data.error == 'pending_account'){
               $("#password").val('');
               $("#number").val('');
               $(".validation_alert").remove();
-              $('.alert_div').append('<div class="alert alert-warning alert-with-icon validation_alert" data-notify="container"><button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close"><i class="tim-icons icon-simple-remove"></i></button><span data-notify="icon" class="tim-icons icon-bell-55"></span><span data-notify="message">Invalid Phone Number or Password</span></div>');
+              $('.alert_div').append('<div class="alert alert-warning alert-with-icon validation_alert" data-notify="container"><button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close"><i class="tim-icons icon-simple-remove"></i></button><span data-notify="icon" class="tim-icons icon-bell-55"></span><span data-notify="message">This account has been suspended for 15 days By an Admin, for Reasons best known to him, Please comply. </span></div>');            
             }
+            /*
+            if (data.error != 'pending_account' || data.error !='no'){
+              $("#password").val('');
+              $("#number").val('');
+              $(".validation_alert").remove();
+              $('.alert_div').append('<div class="alert alert-warning alert-with-icon validation_alert" data-notify="container"><button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close"><i class="tim-icons icon-simple-remove"></i></button><span data-notify="icon" class="tim-icons icon-bell-55"></span><span data-notify="message">Invalid Phone Number or Password</span></div>');    
+            }*/
           }
         })
       }

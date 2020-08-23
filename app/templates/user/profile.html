@@ -14,12 +14,12 @@
                     <div class="block block-two"></div>
                     <div class="block block-three"></div>
                     <div class="block block-four"></div>
-                    <a href="javascript:void(0)">
-                      <img class="avatar" src="/static/img/{{current_user.profile_image}}" alt="...">
-                      <h5 class="title">{{current_user.name}}</h5>
-                    </a>
+                    <div class="full_profile_image_body d-flex justify-content-center">
+                      <div style="background-image: url('/static/img/{{current_user.profile_image}}');" class="ratio upper-img-responsive img-circle user_profile_picture" id="profile_picture_div"></div>
+                    </div>
+                    <h5 class="username">{{current_user.name}}</h5>
                     <p class="description">
-                      Data Science
+                      {{current_user.user_type.title()}}
                     </p>
                   </div>
                 </p>
@@ -27,7 +27,7 @@
                   <h5 class="text-center bio_text">
                   </h5>
                   <div id="profile_locations">
-                    <p class="profile_location"><i class="tim-icons icon-compass-05"></i> Port Harcourt</p>
+                    <p class="profile_location"><i class="tim-icons icon-compass-05"></i> {{current_user.location}}</p>
                     <p class="profile_location"><i class="tim-icons icon-calendar-60"></i> {{current_user.date_joined.strftime('%dnd %b %Y')}}</p>
                     <p class="profile_location"><i class="tim-icons icon-mobile"></i> 0{{current_user.number}}</p>
                   </div>
@@ -171,6 +171,36 @@
 .profile_cases_col{
 	margin-left: 25px;
 	margin-right: 10px;
+}
+.img-responsive{
+  vertical-align: middle !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  display: block;
+  position: relative;
+}
+.upper-img-responsive{
+  vertical-align: middle !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  display: block;
+}
+
+.user_profile_picture{
+  border-radius: 50%;
+  background-position: center center !important;
+  vertical-align: middle !important;
+  background-color: black !important;
+  background-repeat: no-repeat !important;
+  width: 120px;
+  height: 120px;
+  position: relative;
+  border: 5px solid #0f0f20;
+}
+.username{
+  margin-top: 6px;
+  margin-bottom: 1px;
+  font-size: 16px;
 }
 
 // @media(max-width: 620px){
