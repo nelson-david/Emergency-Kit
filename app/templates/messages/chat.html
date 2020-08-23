@@ -1,0 +1,229 @@
+{% extends 'base.html' %}
+
+{% block title %}Messages{% endblock %}
+
+{% block body_content %}
+<div class="content">
+	<div class="row">
+		<div class="col-md-8">
+			<div class="jumbotron" id="main_chat_box">
+				<div class="chat_content" id="chat_content">
+					<div class="row d-flex justify-content-center">
+						<div class="col-md-6">
+							<div class="card chat_card">
+								<div class="card-body">
+									<h5 class="chat_text">What's Up Richie, How're You Doing</h5>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 current_user_card col">
+							<div class="card chat_card">
+								<div class="card-body">
+									<h5 class="chat_text">Hello David Nelson i'm Good, You?</h5>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form_div">
+					<form method="POST" id="chat_form">
+						<div class="form-group">
+							<input type="" name="" class="form-control chat_box_form">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="jumbotron" id="sec_jumbotron">
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+#main_chat_box{
+	background: #0f0f20;
+}
+.chat_content{
+	height: 400px;
+	overflow-y: scroll;
+	overflow-x: hidden !important;
+}
+#sec_jumbotron{
+	background: #0f0f20;
+}
+.current_user_card{
+	margin-top: 35px;
+}
+.chat_text{
+	white-space: pre-wrap !important;
+}
+.chat_card{
+	background: #581b98;
+}
+
+.form_div{
+	margin-top: 10px;
+	margin-bottom: -30px !important;
+}
+
+@media(max-width: 767px){
+	.chat_card{
+		width: 20rem;
+	}
+	.current_user_card{
+		margin-top: 1px;
+		margin-left: 330px;
+	}
+}
+
+@media(max-width: 700px){
+	.chat_card{
+		width: 17rem;
+	}
+	.current_user_card{
+		margin-top: 1px;
+		margin-left: 320px;
+	}
+}
+
+@media(max-width: 645px){
+	.chat_card{
+		width: 17rem;
+	}
+	.current_user_card{
+		margin-top: 1px;
+		margin-left: 260px;
+	}
+}
+
+@media(max-width: 585px){
+	.chat_card{
+		width: 16rem;
+	}
+	.current_user_card{
+		margin-top: 1px;
+		margin-left: 220px;
+	}
+}
+
+@media(max-width: 535px){
+	.chat_card{
+		width: 15rem;
+	}
+	.current_user_card{
+		margin-top: 1px;
+		margin-left: 210px;
+	}
+}
+
+@media(max-width: 510px){
+	.chat_card{
+		width: 14rem;
+	}
+	.current_user_card{
+		margin-top: 1px;
+		margin-left: 200px;
+	}
+}
+
+@media(max-width: 475px){
+	.chat_card{
+		width: 14rem;
+	}
+	.current_user_card{
+		margin-top: 1px;
+		margin-left: 170px;
+	}
+}
+
+@media(max-width: 450px){
+	.chat_card{
+		width: 14rem;
+	}
+	.current_user_card{
+		margin-top: 1px;
+		margin-left: 160px;
+	}
+}
+
+@media(max-width: 435px){
+	.chat_card{
+		width: 14rem;
+	}
+	.current_user_card{
+		margin-top: 1px;
+		margin-left: 130px;
+	}
+}
+
+@media(max-width: 410px){
+	.chat_card{
+		width: 13rem;
+	}
+	.current_user_card{
+		margin-top: 1px;
+		margin-left: 110px;
+	}
+}
+
+@media(max-width: 375px){
+	.chat_card{
+		width: 13rem;
+	}
+	.current_user_card{
+		margin-top: 1px;
+		margin-left: 90px;
+	}
+}
+
+@media(max-width: 355px){
+	.chat_card{
+		width: 14rem;
+	}
+	.current_user_card{
+		margin-top: 1px;
+		margin-left: 70px;
+	}
+}
+
+@media(max-width: 345px){
+	.chat_card{
+		width: 12rem;
+	}
+	.current_user_card{
+		margin-top: 1px;
+		margin-left: 85px;
+	}
+}
+
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+	$(document).ready(function(){
+		alert(location.href)
+		var socket = io.connect();
+
+		socket.on("connect", function(){
+			socket.send("User has connected");
+		});
+
+		socket.on("message", function(msg){
+			$("#chat_content").append('<li>' + msg + '</li>' );
+			console.log("Working")
+		});
+
+		$("#chat_form").on("submit", function(e){
+			e.preventDefault();
+				
+			socket.send($(".chat_box_form").val());
+			$(".chat_box_form").val('')
+		});
+	});
+</script>
+{% endblock %}

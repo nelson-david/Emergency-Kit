@@ -52,3 +52,14 @@ def relieve_user():
 		return jsonify({'successs':'true'})
 	else:
 		return redirect(url_for('login'))
+
+@app.route('/update_profile', methods=['POST'])
+def update_profile():
+	if current_user.is_authenticated:
+		current_user.name = request.form['name']
+		current_user.number = request.form['number']
+		current_user.location = request.form['location']
+		db.session.commit()
+		return jsonify({'success':'true'})
+	else:
+		return redirect(url_for('login'))

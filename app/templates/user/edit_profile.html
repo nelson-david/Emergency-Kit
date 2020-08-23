@@ -30,7 +30,7 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>Location</label>
-                        <input type="text" class="form-control" placeholder="Home Address" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09" id="location">
+                        <input type="text" class="form-control" placeholder="Home Address" value="{{current_user.location}}" id="location">
                       </div>
                     </div>
                   </div>
@@ -62,11 +62,12 @@
 
 			var name = $("#name").val();
 			var number = $("#number").val();
+      var location = $("#location").val();
 
 			req = $.ajax({
 				url: '/update_profile',
 				type: 'post',
-				data: {name:name, number:number},
+				data: {name:name, number:number, location:location},
 				success: function(){
 					history.pushState("", "", "/profile");
 					$("#body").load(location.href + "#body");

@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+
+{% block title %} {{user.name}} {% endblock %}
+
+{% block body_content %}
+      <div class="content" id="content_body">
+        <div class="row">
+          <div class="col-md-5">
+            <div class="card card-user profile_card">
+              <div class="card-body">
+                <p class="card-text">
+                  <div class="author">
+                    <div class="block block-one"></div>
+                    <div class="block block-two"></div>
+                    <div class="block block-three"></div>
+                    <div class="block block-four"></div>
+                    <div class="full_profile_image_body d-flex justify-content-center">
+                      <div style="background-image: url('/static/img/{{user.profile_image}}');" class="ratio upper-img-responsive img-circle user_profile_picture" id="profile_picture_div"></div>
+                    </div>
+                    <h5 class="username">{{user.name}}</h5>
+                    <p class="description">
+                      {{user.user_type.title()}}
+                    </p>
+                  </div>
+                </p>
+                <div class="card-description bio_div">
+                  <h5 class="text-center bio_text">
+                  </h5>
+                  <div id="profile_locations">
+                    {% if user.location == None or user.location == "" %}
+
+                    {% else %}
+                      <p class="profile_location"><i class="tim-icons icon-compass-05"></i> {{user.location}}</p>
+                    {% endif %}
+
+                    <p class="profile_location"><i class="tim-icons icon-calendar-60"></i> {{user.date_joined.strftime('%dnd %b %Y')}}</p>
+                    <p class="profile_location"><i class="tim-icons icon-mobile"></i> 0{{user.number}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <div class="button-container">
+                  <a href="{{url_for('single_message', id=user.id)}}" class="float-left msg_btn to_editprofile"> <i class="tim-icons icon-email-85"></i> Send Private Message</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7">
+            <div class="jumbotron profile_things">
+              <div class="row">
+                <div class="d-flex justify-content-center profile_case_row">
+                  <div class="profile_cases_col">
+                  </div>
+                  <div class="col-sm profile_cases_col">
+                    <div class="card profile_case">
+                      <div class="card-body">
+                        <p>Ask A Question</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm profile_cases_col">
+                    <div class="card profile_case">
+                      <div class="card-body">
+                        <p>Call For A Judgement</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm profile_cases_col">
+                    <div class="card profile_case">
+                      <div class="card-body">
+                        <p>Video Call With Nelson</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm profile_cases_col">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<style>
+.profile_card{
+	background: #0f0f20;
+	box-shadow: none;
+}
+
+.bio_div{
+	margin-top: 6px !important;
+	margin-bottom: -25px !important;
+}
+
+.bio_text{
+	font-size: 13px;
+}
+
+
+.msg_btn{
+	box-shadow: none !important;
+	background: #0f0f40 !important;
+	outline: 0px !important;
+	padding: 8px 35px;
+	border-radius: 5px;
+	border: 1px solid #0f0f20 !important;
+	transition: 0.2s linear !important;
+	transition-delay: 0.2s !important;
+	color: aliceblue;
+}
+
+.msg_btn:hover{
+	box-shadow: none !important;
+	background: #0f0f30 !important;
+	color: lavender;
+	transition: 0.2s linear !important;
+	transition-delay: 0.2s !important;
+}
+
+.profile_things{
+	background: #0f0f20;
+	border-radius: 1px;
+}
+
+.avatar{
+	border-color: #0f0f22 !important;
+}
+
+.profile_case{
+	background: radial-gradient(circle at 11.3% -0.8%, rgb(153, 14, 241) 0%, rgb(41, 3, 101) 100.2%);
+	cursor: pointer;
+	width: 8rem;
+	height: 5rem;
+}
+
+.profile_case_row{
+	margin-bottom: -32px !important;
+	margin-top: -5px !important;
+	overflow-x: scroll;
+	width: 100% !important;
+	padding-left: auto !important;
+}
+
+.profile_case_row::-webkit-scrollbar{
+	height: 10px !important;
+	margin-top: -20px !important;
+}
+.profile_case_row::-webkit-scrollbar-track{
+	background: #0f0f25;
+	border: 1px solid #0f0f30;
+}
+.profile_case_row::-webkit-scrollbar-thumb{
+	background: radial-gradient(circle at 10% 20%, rgb(15, 72, 223) 0%, rgb(24, 41, 80) 81.1%);
+}
+
+
+#profile_locations{
+	margin-left: 10px;
+}
+
+#profile_locations i{
+	margin-right: 5px;
+}
+
+#profile_locations p{
+	font-weight: 400;
+	color: lavenderblush;
+	margin-top: -6px;
+}
+
+.msg_btn i{
+	font-size: 18px;
+	margin-right: 5px;
+}
+
+.profile_cases_col{
+	margin-left: 25px;
+	margin-right: 10px;
+}
+.img-responsive{
+  vertical-align: middle !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  display: block;
+  position: relative;
+}
+.upper-img-responsive{
+  vertical-align: middle !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  display: block;
+}
+
+.user_profile_picture{
+  border-radius: 50%;
+  background-position: center center !important;
+  vertical-align: middle !important;
+  background-color: black !important;
+  background-repeat: no-repeat !important;
+  width: 120px;
+  height: 120px;
+  position: relative;
+  border: 5px solid #0f0f20;
+}
+.username{
+  margin-top: 6px;
+  margin-bottom: 1px;
+  font-size: 16px;
+}
+
+// @media(max-width: 620px){
+	
+} 
+</style>
+
+<script src="/static/assets/js/core/jquery.min.js"></script>
+<script>
+$(".to_editprofile").on("click", function(){
+	history.pushState("", "", "/message/");
+	$("#body").load(location.href + "#body");
+  $("#body").load(location.href + "#navbar");
+});
+</script>
+{% endblock %}

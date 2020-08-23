@@ -27,7 +27,12 @@
                   <h5 class="text-center bio_text">
                   </h5>
                   <div id="profile_locations">
-                    <p class="profile_location"><i class="tim-icons icon-compass-05"></i> {{current_user.location}}</p>
+                    {% if current_user.location == None or current_user.location == "" %}
+
+                    {% else %}
+                      <p class="profile_location"><i class="tim-icons icon-compass-05"></i> {{current_user.location}}</p>
+                    {% endif %}
+
                     <p class="profile_location"><i class="tim-icons icon-calendar-60"></i> {{current_user.date_joined.strftime('%dnd %b %Y')}}</p>
                     <p class="profile_location"><i class="tim-icons icon-mobile"></i> 0{{current_user.number}}</p>
                   </div>
@@ -35,7 +40,8 @@
               </div>
               <div class="card-footer">
                 <div class="button-container">
-                  <button class="float-left msg_btn to_editprofile"> <i class="tim-icons icon-pencil"></i> Edit Your Profile</button>
+                  <button class="float-left msg_btn to_editprofile"> <i class="tim-icons icon-pencil"></i> <span class="btns_txt">Edit Your Profile</span></button>
+                  <button class="float-right profile_pic_btn to_editprofile"> <i class="tim-icons icon-single-02"></i><span class="btns_txt">Profile Picture</span></button>
                 </div>
               </div>
             </div>
@@ -96,7 +102,7 @@
 	box-shadow: none !important;
 	background: #0f0f40 !important;
 	outline: 0px !important;
-	padding: 8px 35px;
+	padding: 8px 25px;
 	border-radius: 5px;
 	border: 1px solid #0f0f20 !important;
 	transition: 0.2s linear !important;
@@ -203,9 +209,48 @@
   font-size: 16px;
 }
 
+.profile_pic_btn{
+  box-shadow: none !important;
+  background: #0f0f40 !important;
+  outline: 0px !important;
+  padding: 8px 25px;
+  border-radius: 5px;
+  border: 1px solid #0f0f20 !important;
+  transition: 0.2s linear !important;
+  transition-delay: 0.2s !important;
+  color: aliceblue;
+}
+
+.profile_pic_btn:hover{
+  box-shadow: none !important;
+  background: #0f0f30 !important;
+  color: lavender;
+  transition: 0.2s linear !important;
+  transition-delay: 0.2s !important;
+}
+
+.profile_pic_btn i{
+  font-size: 18px;
+  margin-right: 5px;
+}
+
 // @media(max-width: 620px){
 	
-} 
+}
+
+@media(max-width: 415px){
+  .btns_txt{
+    display: none !important;
+  }
+  .profile_pic_btn{
+    box-shadow: 1px 3px 10px #0f0f10 !important;
+    padding: 8px 40px;
+  }
+  .msg_btn{
+    box-shadow: 1px 3px 10px #0f0f10 !important;
+    padding: 8px 40px;
+  }
+}
 </style>
 
 <script src="/static/assets/js/core/jquery.min.js"></script>

@@ -40,9 +40,9 @@
 										<h5 class="user_users_cred">Gender: {{user.gender.title()}} </h5>
 										<h5 class="user_users_cred">Number: 0{{user.number}} </h5>
 										{% if user.gender == 'male' %}
-											<a href="" class="cred_link">view his complete details </a>
+											<a href="{{url_for('others_profile', id=user.id)}}" class="cred_link">view his complete details </a>
 										{% else %}
-											<a href="" class="cred_link">view her complete details </a>
+											<a href="{{url_for('others_profile', id=user.id)}}" class="cred_link">view her complete details </a>
 										{% endif %}
 										{% if user.account_pend == True %}
 										    <div class="form-check float-right user_users_check">
