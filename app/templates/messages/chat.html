@@ -8,11 +8,11 @@
 		<div class="col-md-8">
 			<div class="jumbotron" id="main_chat_box">
 				<div class="chat_content" id="chat_content">
-					<div class="row d-flex justify-content-center">
+					<div class="row d-flex justify-content-center" id="chat_row">
 						<div class="col-md-6">
 							<div class="card chat_card">
 								<div class="card-body">
-									<h5 class="chat_text">What's Up Richie, How're You Doing</h5>
+									<h5 class="chat_text">What's up dude, how have you been doing since last week?. I just care about you</h5>
 								</div>
 							</div>
 						</div>
@@ -58,6 +58,7 @@
 }
 .chat_text{
 	white-space: pre-wrap !important;
+	margin-bottom: -2px;
 }
 .chat_card{
 	background: #581b98;
@@ -200,30 +201,42 @@
 
 </style>
 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 <script>
-	$(document).ready(function(){
-		alert(location.href)
-		var socket = io.connect();
-
-		socket.on("connect", function(){
-			socket.send("User has connected");
-		});
-
-		socket.on("message", function(msg){
-			$("#chat_content").append('<li>' + msg + '</li>' );
-			console.log("Working")
-		});
+	$(function(){
 
 		$("#chat_form").on("submit", function(e){
 			e.preventDefault();
-				
-			socket.send($(".chat_box_form").val());
-			$(".chat_box_form").val('')
+
+			var message_sent = $(".chat_box_form").val();
+
+			$.post('/sending', {'message':message_sent}, function(){
+				console.log("Sent");
+				$('.chat_box_form').val('');
+			});
 		});
+
+		var pusher = new Pusher('2281811cac7fdcfac988', {
+			cluster: 'us2',
+			encypted: true
+		});
+
+		var channel = pusher.subscribe('chat-channel');
+
+		channel.bind('new-message', function(data) {
+			let message_template = `<div class="col-md-6 col">
+										<div class="card chat_card">
+											<div class="card-body">
+												<h5 class="chat_text">${data.message}</h5>
+											</div>
+										</div>
+									</div>`
+
+			$("#chat_row").append(message_template);
+		});
+
 	});
 </script>
+
 {% endblock %}
