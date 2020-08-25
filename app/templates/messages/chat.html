@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Messages {{user.id}} {% endblock %}
+{% block title %}Messages {% endblock %}
 
 {% block body_content %}
 <div class="content">
@@ -28,7 +28,7 @@
 				<div class="form_div">
 					<form method="POST" id="chat_form">
 						<div class="form-group">
-							<input type="" name="" class="form-control chat_box_form" user_id="{{user.id}}">
+							<input type="" name="" class="form-control chat_box_form" user_id="{{current_user.id}}">
 						</div>
 					</form>
 				</div>
