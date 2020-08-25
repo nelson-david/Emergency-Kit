@@ -47,7 +47,7 @@ def auth_user():
 			login_user(user, remember=True)
 			return jsonify({'error':'no'})
 	print("Error function")
-	return 'error'
+	return jsonify({'error':'main_error'})
 
 
 @app.route('/logout')

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Notifications{% endblock %}
+
+{% block body_content %}
+<div class="content">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="jumbotron" id="main_box">
+				<div class="notify_container">
+					{% for notifications in notify %}
+						{% if notifications.action_type == "incidence" %}
+							<div class="alert alert-danger alert-dismissible fade show notify_alert" role="alert">
+							  <a href="{{url_for('others_profile', id=notifications.carrier_id)}}">
+							  	{% if notifications.carrier_name==current_user.name %}
+							  		You
+							  	{% else%}
+							  		{{notifications.carrier_name}}
+							  	{% endif %}
+							  </a> checked in a new incident, be sure to leave a feedback  --  <strong>  {{notifications.date_carried.strftime('%X') }}</strong>
+							  <button type="button" class="close remove_notify" data-dismiss="alert" aria-label="Close">
+							      <i class="tim-icons icon-align-left-2"></i>
+							  </button>
+							</div>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+#main_box{
+	height: 530px; 
+	background: #0f0f23;
+	box-shadow: 1px 3px 10px #050505;
+	margin-bottom: -550px !important;
+}
+.notify_container{
+	height: 280px;
+	overflow-y: scroll;
+	overflow-x: hidden !important;
+	padding-right: 15px;
+}
+
+.notify_container::-webkit-scrollbar{
+	width: 10px !important;
+	margin-top: -20px !important;
+}
+.notify_container::-webkit-scrollbar-track{
+	background: #002651;
+}
+.notify_container::-webkit-scrollbar-thumb{
+	background: radial-gradient(circle at 10% 20%, rgb(15, 72, 223) 0%, rgb(24, 41, 80) 81.1%);
+	cursor: pointer !important;
+	border-radius: 10px;
+}
+
+.notify_alert{
+	background: #B80F0A;
+}
+
+.remove_notify{
+	margin-top: -1px !important;
+}
+
+@media(min-width: 992px){
+	#main_box{
+		height: 410px;
+	}	
+}
+</style>
+{% endblock %}

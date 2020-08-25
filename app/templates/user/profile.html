@@ -15,7 +15,7 @@
                     <div class="block block-three"></div>
                     <div class="block block-four"></div>
                     <div class="full_profile_image_body d-flex justify-content-center">
-                      <div style="background-image: url('/static/img/{{current_user.profile_image}}');" class="ratio upper-img-responsive img-circle user_profile_picture" id="profile_picture_div"></div>
+                      <div style="background-image: url('/static/img/{{current_user.profile_image}}');" class="ratio upper-img-responsive img-circle user_profile_picture" id="profile_picture_div" data-toggle="modal" data-target="#exampleModal"></div>
                     </div>
                     <h5 class="username">{{current_user.name}}</h5>
                     <p class="description">
@@ -41,46 +41,34 @@
               <div class="card-footer">
                 <div class="button-container">
                   <button class="float-left msg_btn to_editprofile"> <i class="tim-icons icon-pencil"></i> <span class="btns_txt">Edit Your Profile</span></button>
-                  <button class="float-right profile_pic_btn to_editprofile"> <i class="tim-icons icon-single-02"></i><span class="btns_txt">Profile Picture</span></button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-7">
-            <div class="jumbotron profile_things">
-              <div class="row">
-                <div class="d-flex justify-content-center profile_case_row">
-                  <div class="profile_cases_col">
-                  </div>
-                  <div class="col-sm profile_cases_col">
-                    <div class="card profile_case">
-                      <div class="card-body">
-                        <p>Ask A Question</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm profile_cases_col">
-                    <div class="card profile_case">
-                      <div class="card-body">
-                        <p>Call For A Judgement</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm profile_cases_col">
-                    <div class="card profile_case">
-                      <div class="card-body">
-                        <p>Video Call With Nelson</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm profile_cases_col">
-                  </div>
+                  <input type="file" name="" id="image" hidden="">
+                  <label for="image" class="float-right profile_pic_btn"> <i class="tim-icons icon-single-02"></i><span class="btns_txt">Profile Picture</span></label>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <hr>
       </div>
+
+      <!-------------------- User Image Modal Form ----------------->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content" style="background: #0f0f20 !important; margin-top: -90px !important;" id="modalContent1">
+            <div class="modal-body">
+              <h4 class="modal-title" id="exampleModalLabel">Profile Photo</h4>
+              <hr>
+              <div class="image_body d-flex justify-content-center">
+                <img src="/static/img/{{current_user.profile_image}}" class="img-fluid">
+              </div>
+              {% if current_user.image_file != "default.jpg" %}
+                <button type="button" class="btn btn-info float-right btn-sm btn-block" id="remove_button">remove profile photo</button>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-------------------- End Of User Image Modal Form ----------------->
 
 <style>
 .profile_card{
@@ -202,6 +190,7 @@
   height: 120px;
   position: relative;
   border: 5px solid #0f0f20;
+  cursor: pointer;
 }
 .username{
   margin-top: 6px;
@@ -218,7 +207,9 @@
   border: 1px solid #0f0f20 !important;
   transition: 0.2s linear !important;
   transition-delay: 0.2s !important;
-  color: aliceblue;
+  color: aliceblue !important;
+  cursor: pointer;
+  font-size: 15px !important;
 }
 
 .profile_pic_btn:hover{
@@ -234,8 +225,8 @@
   margin-right: 5px;
 }
 
-// @media(max-width: 620px){
-	
+@media(max-width: 480px){
+
 }
 
 @media(max-width: 415px){
@@ -255,6 +246,33 @@
 
 <script src="/static/assets/js/core/jquery.min.js"></script>
 <script>
+$("#image").on("change", function(){
+  var form_data = new FormData();
+  form_data.append('file', $("#image").prop('files')[0]);
+
+  req = $.ajax({
+    url : '/update_photo',
+    type : 'POST',
+    data : form_data,
+    contentType : false,
+    cache : false,
+    processData : false,
+    success : function(){
+      $("#body").load(location.href + "#profile_picture_div");
+    }
+  });
+});
+
+$("#remove_button").on("click", function(){
+  req = $.ajax({
+    url : '/remove_photo',
+    type : 'POST',
+    success : function(){
+      $("#body").load(location.href + "#profile_picture_div");
+    }
+  });
+});
+
 $(".to_editprofile").on("click", function(){
 	history.pushState("", "", "/edit/profile");
 	$("#body").load(location.href + "#body");

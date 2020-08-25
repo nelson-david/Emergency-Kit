@@ -31,6 +31,17 @@ class User(UserMixin, db.Model):
 		backref=db.backref('liker', lazy='joined'), lazy='dynamic',\
 		cascade='all, delete-orphan')
 
+	messages_sent = db.relationship('Message', foreign_keys='Message.sender_id',\
+		backref='author', lazy='dynamic')
+	messages_received = db.relationship('Message', foreign_keys='Message.recipient_id',\
+		backref='recipient', lazy='dynamic')
+	last_message_read_time = db.Column(db.DateTime)
+
+	notify_carrier = db.relationship('Notifications', foreign_keys='Notifications.carrier_id',\
+		backref='n_carrier', lazy='dynamic')
+	notify_reciever = db.relationship('Notifications', foreign_keys='Notifications.reciever_id',\
+		backref='n_reciever', lazy='dynamic')
+
 	def __repr__(self):
 		return f" {self.name}, {self.number}, {self.profile_image}, {self.date_joined}"
 
@@ -72,3 +83,23 @@ class Safe(db.Model):
 	incidence_id = db.Column(db.Integer, db.ForeignKey('incidence.id'), nullable=False)
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 	date_added = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
+
+
+class Message(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+	recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+	body = db.Column(db.String(140))
+	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+	def __repr__(self):
+		return f'<Message {self.body}>'
+
+
+class Notifications(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	carrier_name = db.Column(db.String(50))
+	carrier_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+	reciever_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+	action_type = db.Column(db.String(140))
+	date_carried = db.Column(db.DateTime, index=True, default=datetime.utcnow)

@@ -18,7 +18,7 @@
 {% block body %}
 <body class="" id="body">
   <div class="wrapper">
-    <div class="sidebar position-fixed" style="background: #581b98;">
+    <div class="sidebar position-fixed" style="background: #581b98; height: 420px !important;">
       <div class="sidebar-wrapper">
         <div class="logo">
           <a href="javascript:void(0)" class="simple-text logo-mini">
@@ -30,32 +30,32 @@
         </div>
         <ul class="nav">
           <li>
-            <a href="javascript:void(0)" class="to_home">
+            <a href="{{url_for('home')}}" class="">
               <i class="tim-icons icon-istanbul"></i>
               <p>Home</p>
             </a>
           </li>
           <li>
-            <a href="javascript:void(0)" class="to_profile">
+            <a href="{{url_for('profile')}}" class="">
               <i class="tim-icons icon-single-02"></i>
               <p>Profile</p>
             </a>
           </li>
           <li>
-            <a href="javascript:void(0)" class="to_notifications">
+            <a href="{{url_for('alerts')}}" class="">
               <i class="tim-icons icon-bell-55"></i>
               <p>Notifications</p>
             </a>
           </li>
           <li>
-            <a href="javascript:void(0)" class="to_dashboard">
-              <i class="tim-icons icon-chart-pie-36"></i>
-              <p>Dashboard</p>
+            <a href="{{url_for('single_message')}}" class="">
+              <i class="tim-icons icon-email-85"></i>
+              <p>Community Chat</p>
             </a>
           </li>
           <li>
-            <a href="/logout" class="to_announcement">
-              <i class="tim-icons icon-email-85"></i>
+            <a href="{{url_for('logout')}}" class="">
+              <i class="tim-icons icon-app"></i>
               <p>Logout</p>
             </a>
           </li>
@@ -129,6 +129,14 @@
   <script src="/static/assets/js/plugins/bootstrap-notify.js"></script>
   <script src="/static/assets/js/black-dashboard.min.js?v=1.0.0"></script>
   <script src="/static/js/script.js"></script>
+
+  <script>
+    setInterval(function(){
+      if($(window).width() < 400){
+        $(window).location.replace('/sorry');
+      }
+    }, 5)
+  </script>
 </body>
 {% endblock %}
 </html>

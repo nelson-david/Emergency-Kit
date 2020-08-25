@@ -90,8 +90,7 @@
 	  			type: 'post',
 	  			data: {password:password, number:number, gender:gender, name:name, account_type:account_type},
 	  			success: function(){
-            history.pushState("", "", "/login");
-            $("#body").load(location.href + "#body");
+            window.location.replace('/login')
 	  			},
 	  			error: function(){
 	  				

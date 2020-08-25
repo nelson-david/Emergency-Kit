@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %}Messages{% endblock %}
+{% block title %}Messages {{user.id}} {% endblock %}
 
 {% block body_content %}
 <div class="content">
 	<div class="row">
-		<div class="col-md-8">
+		<div class="col-md-9">
 			<div class="jumbotron" id="main_chat_box">
 				<div class="chat_content" id="chat_content">
 					<div class="row d-flex justify-content-center" id="chat_row">
@@ -28,14 +28,10 @@
 				<div class="form_div">
 					<form method="POST" id="chat_form">
 						<div class="form-group">
-							<input type="" name="" class="form-control chat_box_form">
+							<input type="" name="" class="form-control chat_box_form" user_id="{{user.id}}">
 						</div>
 					</form>
 				</div>
-			</div>
-		</div>
-		<div class="col-md-4">
-			<div class="jumbotron" id="sec_jumbotron">
 			</div>
 		</div>
 	</div>
@@ -44,12 +40,28 @@
 <style>
 #main_chat_box{
 	background: #0f0f20;
+	height: 420px !important;
 }
 .chat_content{
-	height: 400px;
+	height: 280px;
 	overflow-y: scroll;
 	overflow-x: hidden !important;
+	padding-right: 15px;
 }
+
+.chat_content::-webkit-scrollbar{
+	width: 10px !important;
+	margin-top: -20px !important;
+}
+.chat_content::-webkit-scrollbar-track{
+	background: #002651;
+}
+.chat_content::-webkit-scrollbar-thumb{
+	background: radial-gradient(circle at 10% 20%, rgb(15, 72, 223) 0%, rgb(24, 41, 80) 81.1%);
+	cursor: pointer !important;
+	border-radius: 10px;
+}
+
 #sec_jumbotron{
 	background: #0f0f20;
 }
@@ -210,8 +222,8 @@
 			e.preventDefault();
 
 			var message_sent = $(".chat_box_form").val();
-
-			$.post('/sending', {'message':message_sent}, function(){
+			var id = $(".chat_box_form").attr("user_id");
+			$.post('/sending', {'message':message_sent, 'id':id}, function(){
 				console.log("Sent");
 				$('.chat_box_form').val('');
 			});

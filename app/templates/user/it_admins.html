@@ -82,12 +82,12 @@
 										<h5 class="user_users_cred">Gender: {{user.gender.title()}} </h5>
 										<h5 class="user_users_cred">Number: 0{{user.number}} </h5>
 										{% if user == current_user%}
-											<a href="" class="cred_link">view your profile </a>
+											<a href="{{url_for('others_profile', id=user.id)}}" class="cred_link">view your profile </a>
 										{% else %}
 											{% if user.gender == 'male' %}
-												<a href="" class="cred_link">view his complete details </a>
+												<a href="{{url_for('others_profile', id=user.id)}}" class="cred_link">view his complete details </a>
 											{% else %}
-												<a href="" class="cred_link">view her complete details </a>
+												<a href="{{url_for('others_profile', id=user.id)}}" class="cred_link">view her complete details </a>
 											{% endif %}
 										{% endif %}
 									</div>
@@ -233,6 +233,13 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+/*
+var size = $(window).width();
+
+if( size > 600){
+	window.location.replace("/sorry");
+}
+*/
 $(".users").hide();
 $(".admins").hide();
 $("#toggle_incidents").css("color", "blue");
