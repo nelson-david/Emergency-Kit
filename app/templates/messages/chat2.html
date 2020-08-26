@@ -30,46 +30,27 @@
                     </div>
                     <hr>
                     <div class="chat_content" id="chat_content">
-                        <div class="col left non_user_col">
-                            <div class="card non_user_chat_card">
-                                <div class="card-body">
-                                    <h5 class="chat_text non_user_chat_text">What's up bro, stop taking laws into your hands. It's not good.
-                                    </h5>
+                        {% for message in messages %}
+                            {% if message.author == current_user %}
+                                <div class="col right current_user_col">
+                                    <div class="card chat_card current_user_chat_card">
+                                        <div class="card-body">
+                                            <h5 class="chat_text">{{message.body}}</h5>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col right current_user_col">
-                            <div class="card current_user_chat_card">
-                                <div class="card-body">
-                                    <h5 class="chat_text">What's up bro, stop taking laws into your hands. It's not good.
-                                    </h5>
+                            {% else %}
+                                <div class="col left non_user_col">
+                                    <div class="card chat_card non_user_chat_card">
+                                        <div class="card-body">
+                                            <div style="background-image: url('/static/img/{{message.author.profile_image}}');" class=" upper-img-responsive img-circle group_chat_picture"></div>
+                                            <h5 class="message_author_name"><a href="{{url_for('others_profile', id=message.author.id)}}">{{message.author.name}}</a></h5>
+                                            <h5 class="chat_text non_user_chat_text">{{message.body}}</h5>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col left non_user_col">
-                            <div class="card non_user_chat_card">
-                                <div class="card-body">
-                                    <h5 class="chat_text non_user_chat_text">What's up bro, stop taking laws into your hands. It's not good.
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col right current_user_col">
-                            <div class="card current_user_chat_card">
-                                <div class="card-body">
-                                    <h5 class="chat_text">What's up bro, stop taking laws into your hands. It's not good.
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col right current_user_col">
-                            <div class="card current_user_chat_card">
-                                <div class="card-body">
-                                    <h5 class="chat_text">What's up bro, stop taking laws into your hands. It's not good.
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
+                            {% endif %}
+                        {% endfor %}
                     </div>
                     <div class="user_typing">
                         
@@ -116,18 +97,24 @@
 .non_user_chat_card{
     background: #581b98;
     width: 55%;
+    border-radius: 5px
 }
 .current_user_chat_card{
     width: 55%;
     background: #cabbe9;
+    border-radius: 5px;
 }
 .chat_text{
-    margin-bottom: -12px;
-    white-space: pre-wrap;
+    margin-bottom: -4px;
     text-align: left;
     color: #0f0f20 !important;
     font-family: 'Raleway', sans-serif;
     font-size: 13px;
+}
+.non_user_chat_text{
+    margin-left: 43px;
+    white-space: pre-wrap;
+    margin-top: -8px;
 }
 .chat_content{
     height: 270px;
@@ -280,6 +267,40 @@
     transition: 0.2s linear !important;
     transition-delay: 0.2s linear !important;
 }
+
+.img-responsive{
+  vertical-align: middle !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  display: block;
+  position: relative;
+}
+.upper-img-responsive{
+  vertical-align: middle !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  display: block;
+}
+
+.group_chat_picture{
+  border-radius: 50%;
+  background-position: center center !important;
+  vertical-align: middle !important;
+  background-color: black !important;
+  background-repeat: no-repeat !important;
+  width: 35px;
+  height: 35px;
+  position: relative;
+  border: 2px solid #0f0f20;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.message_author_name{
+    margin-top: -41px;
+    margin-left: 43px;
+    white-space: pre-wrap;
+    margin-bottom: 10px;
+}
 </style>
 
 {% include 'messages/media.html' %}
@@ -290,8 +311,8 @@
 <script>
 
 
-$('.current_user_chat_card').on('press', function(e) {
-    alert("Clicked")
+$('.chat_card').on('press', function(e) {
+    alert("Working");
 });
 
 
@@ -328,21 +349,55 @@ $(".yellow_color").on("click", function(){
 </script>
 <script>
     //$("#chat_content").scrollTop($("#chat_content").height());
+
     $('#chat_content').scrollTop($('#chat_content')[0].scrollHeight);
-    $(function(){
 
-        $("#chat_form").on("submit", function(e){
-            e.preventDefault();
+    $("#chat_form").on("submit", function(e){
+        e.preventDefault();
 
-            var message_sent = $(".message_box").val();
-            var id = $(".message_box").attr("user_id");
-            $.post('/sending', {'message':message_sent, 'id':id}, function(){
+        var message_sent = $(".message_box").val();
+
+        req = $.ajax({
+            url: "/sending",
+            type: 'post',
+            data: {'message':message_sent},
+            success: function(){
+                $('.message_box').val('');
+
+                var pusher = new Pusher('2281811cac7fdcfac988', {
+                    cluster: 'us2',
+                    encypted: true
+                });
+
+                var channel = pusher.subscribe('chat-channel');
+
+                channel.bind('new-message', function(data){
+                    alert("sent");
+                    let message_template = `<div class="col right current_user_col">
+                                                <div class="card current_user_chat_card">
+                                                    <div class="card-body">
+                                                        <p class="chat_text">${data.message}</p>
+                                                    </div>
+                                                </div>
+                                            </div>`
+                    //$("#chat_content").scrollTop($("#chat_content").height());
+                    $(".typing_text").remove();
+                    $("#body").load("#body");
+                    //$("#chat_content").append(message_template);
+                    $('#chat_content').scrollTop($('#chat_content')[0].scrollHeight);
+                    //$("#chat_content").scrollTop($("#chat_content").height()); 
+                });
+            }
+        });
+    });
+
+        /*$.post('/sending', {'message':message_sent, 'id':id}, function(){
                 console.log("Sent");
                 $('.message_box').val('');
             });
-        });
+        });*/
 
-        var pusher = new Pusher('2281811cac7fdcfac988', {
+        /*var pusher = new Pusher('2281811cac7fdcfac988', {
             cluster: 'us2',
             encypted: true
         });
@@ -350,6 +405,7 @@ $(".yellow_color").on("click", function(){
         var channel = pusher.subscribe('chat-channel');
 
         channel.bind('new-message', function(data) {
+            alert("sent");
             let message_template = `<div class="col right current_user_col">
                                         <div class="card current_user_chat_card">
                                             <div class="card-body">
@@ -359,10 +415,13 @@ $(".yellow_color").on("click", function(){
                                     </div>`
             //$("#chat_content").scrollTop($("#chat_content").height());
             $(".typing_text").remove();
-            $("#chat_content").append(message_template);
+            $("#body").load("#body");
+            //$("#chat_content").append(message_template);
             $('#chat_content').scrollTop($('#chat_content')[0].scrollHeight);
             //$("#chat_content").scrollTop($("#chat_content").height()); 
-        });
+    });*/
+
+    /*$(function(){
 
     });
 
@@ -393,6 +452,6 @@ $(".yellow_color").on("click", function(){
             //$("#chat_content").scrollTop($("#chat_content").height()); 
         });
 
-    });
+    });*/
 </script>
 {% endblock %}

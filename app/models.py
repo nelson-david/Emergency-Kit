@@ -26,20 +26,18 @@ class User(UserMixin, db.Model):
 	date_pended = db.Column(db.DateTime(), nullable=True)
 	incidence = db.relationship("Incidence", backref="author", lazy=True)
 	safe = db.relationship("Safe", backref="marker", lazy=True)
+	comment = db.relationship("Comment", backref="comm_ent", lazy=True)
+	message_sent = db.relationship("Message", backref="author", lazy=True)
 
 	liked = db.relationship('Like', foreign_keys=[Like.liker_id],\
 		backref=db.backref('liker', lazy='joined'), lazy='dynamic',\
 		cascade='all, delete-orphan')
 
-	messages_sent = db.relationship('Message', foreign_keys='Message.sender_id',\
-		backref='author', lazy='dynamic')
-	messages_received = db.relationship('Message', foreign_keys='Message.recipient_id',\
-		backref='recipient', lazy='dynamic')
-	last_message_read_time = db.Column(db.DateTime)
-
-	notify_carrier = db.relationship('Notifications', foreign_keys='Notifications.carrier_id',\
+	notify_carrier = db.relationship('Notifications',\
+		foreign_keys='Notifications.carrier_id',\
 		backref='n_carrier', lazy='dynamic')
-	notify_reciever = db.relationship('Notifications', foreign_keys='Notifications.reciever_id',\
+	notify_reciever = db.relationship('Notifications',\
+		foreign_keys='Notifications.reciever_id',\
 		backref='n_reciever', lazy='dynamic')
 
 	def __repr__(self):
@@ -66,6 +64,7 @@ class Incidence(db.Model):
 	date_added = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 	safes = db.relationship("Safe", backref="marked_incidence", lazy=True)
+	comments = db.relationship("Comment", backref="commenter", lazy=True)
 
 	likers = db.relationship('Like', foreign_keys=[Like.liked_id],\
 		backref=db.backref('liked', lazy='joined'), lazy='dynamic',\
@@ -88,7 +87,6 @@ class Safe(db.Model):
 class Message(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-	recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	body = db.Column(db.String(140))
 	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
@@ -103,3 +101,14 @@ class Notifications(db.Model):
 	reciever_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	action_type = db.Column(db.String(140))
 	date_carried = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+
+class Comment(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+	incidence_id = db.Column(db.Integer, db.ForeignKey('incidence.id'), nullable=False)
+	body = db.Column(db.String(140))
+	timestamp = db.Column(db.DateTime(), default=datetime.utcnow)
+
+	def __repr__(self):
+		return f'<Message {self.body}>'

@@ -12,34 +12,38 @@
 					<h5>A(n) {{incidence.name}} occured in Ozuoba at {{incidence.date_added.strftime('%d %b %Y, %I%p')}} </h5>
 					<h5> {{incidence.likers.count()}} Person(s) where affected by the incidence</h5>
 
-                  <form method="POST" id="safe_form">
-                    <div class="form-check form-check-radio">
-                        <label class="form-check-label">
-                          {% if incidence.is_liked_by(current_user) %}
-                            <input class="form-check-input markers" type="radio" name="exampleRadios" id="safe" value="safe" incidence_id="{{incidence.id}}" checked="">
-                              Safe
-                            <span class="form-check-sign"></span>
-                          {% else %}
-                            <input class="form-check-input markers" type="radio" name="exampleRadios" id="safe" value="safe" incidence_id="{{incidence.id}}">
-                              Safe
-                            <span class="form-check-sign"></span>
-                          {% endif %}
-                        </label>
-                    </div>
-                    <div class="form-check form-check-radio">
-                        <label class="form-check-label">
-                          {% if current_user.is_liking(incidence) %}
-                            <input class="form-check-input markers" type="radio" name="exampleRadios" id="not_safe" value="not_safe" incidence_id="{{incidence.id}}">
-                              Not Safe
-                            <span class="form-check-sign"></span>
-                          {% else %}
-                            <input class="form-check-input markers" type="radio" name="exampleRadios" id="not_safe" value="not_safe" incidence_id="{{incidence.id}}" checked="">
-                              Not Safe
-                            <span class="form-check-sign"></span>
-                          {% endif %}
-                        </label>
-                    </div>
-                  </form>
+                	<form method="POST" id="safe_form">
+	                    <div class="form-check form-check-radio">
+	                        <label class="form-check-label">
+	                          {% if incidence.is_liked_by(current_user) %}
+	                            <input class="form-check-input markers" type="radio" name="exampleRadios" id="safe" value="safe" incidence_id="{{incidence.id}}" checked="">
+	                              Safe
+	                            <span class="form-check-sign"></span>
+	                          {% else %}
+	                            <input class="form-check-input markers" type="radio" name="exampleRadios" id="safe" value="safe" incidence_id="{{incidence.id}}">
+	                              Safe
+	                            <span class="form-check-sign"></span>
+	                          {% endif %}
+	                        </label>
+	                    </div>
+	                    <div class="form-check form-check-radio">
+	                        <label class="form-check-label">
+	                          {% if current_user.is_liking(incidence) %}
+	                            <input class="form-check-input markers" type="radio" name="exampleRadios" id="not_safe" value="not_safe" incidence_id="{{incidence.id}}">
+	                              Not Safe
+	                            <span class="form-check-sign"></span>
+	                          {% else %}
+	                            <input class="form-check-input markers" type="radio" name="exampleRadios" id="not_safe" value="not_safe" incidence_id="{{incidence.id}}" checked="">
+	                              Not Safe
+	                            <span class="form-check-sign"></span>
+	                          {% endif %}
+	                        </label>
+	                    </div>
+                 	</form>
+				</div>
+				<hr>
+				<div class="card-footer">
+					<p>While 275 marked safe on this event, 56 are unsafe</p>
 				</div>
 			</div>
 		</div>
@@ -49,31 +53,32 @@
 					<h4>Please Leave A Comment Here</h4>
 				</div>
 				<div class="card-body">
-					<div class="comment_content">
-						<div class="col-md-9">
-							<div class="card">
-								<div class="card-body">
+					<div class="comment_content" id="comment_content">
+						{% for comments in incidence.comments %}
+							<div class="col-md-11 col-lg-10 col-sm-12 comment_col">
+								<div class="card card_comment">
+									<div class="card-body">
+										<a>
+                    					<div style="background-image: url('/static/img/{{comments.comm_ent.profile_image}}');" class=" upper-img-responsive img-circle comment_user_profile_picture"></div>
+                    					<h5 class="commenter_username"><a href="{{url_for('others_profile', id=comments.comm_ent.id)}}">{{comments.comm_ent.name}}</a></h5>
+										<h5 class="comment_text">{{comments.body}}</h5>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="col-md-9">
-							<div class="card">
-								<div class="card-body">
-								</div>
-							</div>
-						</div>
-						<div class="col-md-9">
-							<div class="card">
-								<div class="card-body">
-								</div>
-							</div>
-						</div>
+						{% endfor %}
 					</div>
 				</div>
 				<div class="card-footer">
 					<div class="comment_form_section">
-						<form class="comment_form" method="POST">
-							<textarea class="form-control chat_box" user_id="{{current_user.id}}" rows="1" placeholder="Leave A Comment Here"></textarea>
+						<form class="comment_form" method="POST" incidence_id="{{incidence.id}}">
+							<div class="row">
+								<div class="col-md-8">
+									<textarea class="form-control comment_box" user_id="{{current_user.id}}" rows="1" placeholder="Leave A Comment Here"></textarea>
+								</div>
+								<div class="col-md-1">
+									<button class="btn btn-primary">add</button>
+								</div>
+							</div>
 						</form>
 					</div>
 				</div>
@@ -90,28 +95,140 @@
 	background: #0f0f20;
 	height: 350px;
 }
-.chat_box{
+.comment_content{
+    height: 220px;
+    overflow-y: scroll;
+    overflow-x: hidden !important;
+    padding-right: 15px;
+}
+.comment_content::-webkit-scrollbar{
+    width: 10px !important;
+}
+.comment_content::-webkit-scrollbar-track{
+    background: #0f0f20;
+}
+.comment_content::-webkit-scrollbar-thumb{
+    background: #581b98;
+    cursor: pointer !important;
+    border-radius: 10px;
+}
+.comment_box{
     border: 1px solid #0f0f40 !important;
     border-radius: 6px !important;
     transition: 0.2s linear !important;
     transition-delay: 0.2s linear !important;
     padding-left: 10px !important;
 }
-.chat_box:focus{
+.comment_box:focus{
     border: 1px solid #581b98 !important;
     transition: 0.2s linear !important;
     transition-delay: 0.2s linear !important;
 }
-.chat_box::-webkit-scrollbar{
+.comment_box::-webkit-scrollbar{
     width: 8px !important;
 }
-.chat_box::-webkit-scrollbar-track{
+.comment_box::-webkit-scrollbar-track{
     background: #0f0f20;
 }
-.chat_box::-webkit-scrollbar-thumb{
+.comment_box::-webkit-scrollbar-thumb{
     background: #581b98;
     cursor: pointer !important;
     border-radius: 10px;
 }
+.comment_form_section{
+	margin-top: -30px;
+}
+.card_comment{
+	border-radius: 5px;
+	background: #171332;
+	margin-bottom: 13px;
+}
+.comment_text{
+	margin-bottom: 5px;
+	margin-top: -8px;
+	margin-left: 43px;
+	white-space: pre-wrap;
+}
+.commenter_username{
+	margin-top: -41px;
+	margin-left: 43px;
+	white-space: pre-wrap;
+	margin-bottom: 10px;
+}
+.img-responsive{
+  vertical-align: middle !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  display: block;
+  position: relative;
+}
+.upper-img-responsive{
+  vertical-align: middle !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  display: block;
+}
+
+.comment_user_profile_picture{
+  border-radius: 50%;
+  background-position: center center !important;
+  vertical-align: middle !important;
+  background-color: black !important;
+  background-repeat: no-repeat !important;
+  width: 35px;
+  height: 35px;
+  position: relative;
+  border: 2px solid #0f0f20;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+@media(max-width: 767px){
+	.card_comment{
+		width: 22rem;
+	}
+}
+@media(max-width: 450px){
+	.card_comment{
+		width: 19rem;
+	}
+}
+@media(max-width: 400px){
+	.card_comment{
+		width: 17rem;
+	}
+}
+@media(max-width: 360px){
+	.card_comment{
+		width: 15rem;
+	}
+}
+@media(max-width: 330px){
+	.card_comment{
+		width: 13rem;
+	}
+}
 </style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="rawgit.com/ngryman/jquery.finger/v0.1.2/dist/jquery.finger.js"></script>
+<script>
+	$('.comment_col').on('press', function(e) {
+	    alert("Clicked")
+	});
+
+	$('#comment_content').scrollTop($('#comment_content')[0].scrollHeight);
+
+	$(".comment_form").on("submit", function(e){
+		e.preventDefault();
+
+		var id = $(this).attr("incidence_id");
+		var body = $(".comment_box").val();
+
+		$.post('/add_comment', {'id':id, 'body':body}, function(){
+			$("#body").load("#body");
+			$('#comment_content').scrollTop($('#comment_content')[0].scrollHeight);
+		})
+	})
+</script>
 {% endblock %}

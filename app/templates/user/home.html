@@ -3,12 +3,12 @@
 {% block title %}Home{% endblock %}
 
 {% block body_content %}
-      {% if current_user.user_type == "it_admin" %}
+  {% if current_user.user_type == "it_admin" %}
         {% include 'user/it_admins.html' %}
-      {% endif%}
-      {% if current_user.user_type == "citizen" %}
-      <div class="content" id="content_body">
-        <button href="#" id="installButton" hidden>Install!</button>
+  {% endif%}
+  {% if current_user.user_type == "citizen" %}
+    <div class="content" id="content_body">
+      <button href="#" id="installButton" class="btn">Install!</button>
         <div class="row">
           <div class="col-12">
             <div class="card incidence_board">
@@ -167,7 +167,7 @@
               </div>
               <hr>
               <div class="card-footer" style="margin-top: -20px; margin-bottom: -10px;">
-                <p class="text-center">This incident was announced by <span style="font-weight: 400;">{{incidents.author.name}}</span> </p>
+                <p class="text-center">This incident was announced by <span style="font-weight: 400;">{{incidents.author.name}}</span> : <a href="{{url_for('single_post', id=incidents.id)}}" class="links"> view details </a></h5> </p>
               </div>
             </div>
             {% endfor %}
@@ -214,8 +214,8 @@
             </div>
           </div>
         </div>
-      </div>
-      {% endif %}
+    </div>
+  {% endif %}
 
 <style>
 .ic_card{

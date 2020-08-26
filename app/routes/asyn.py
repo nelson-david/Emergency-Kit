@@ -1,7 +1,7 @@
 from app import app, db
 from flask import redirect, url_for, request, jsonify
 from flask_login import current_user
-from app.models import Incidence, Safe, User, Notifications
+from app.models import Incidence, Safe, User, Notifications, Comment
 
 from datetime import datetime
 import secrets
@@ -98,6 +98,14 @@ def remove_photo():
 	current_user.profile_image = "default.jpg"
 	db.session.commit()
 	return jsonify({'success' : 'true', 'like_num' : 3})
+
+@app.route("/add_comment", methods=['POST'])
+def add_comment():
+	incidence = Incidence.query.get_or_404(request.form['id'])
+	new_comment = Comment(comm_ent=current_user, commenter=incidence, body=request.form['body'])
+	db.session.add(new_comment)
+	db.session.commit()
+	return jsonify({'success':'true'})
 
 @app.route('/service-worker.js')
 def sw():
