@@ -1,0 +1,31 @@
+{
+  "name": "River State Emergency",
+  "short_name": "RSE",
+  "theme_color": "#0f0f20",
+  "background_color": "#0f0f20",
+  "icons": [
+    {
+        "src": "/static/icons/icon-64.png",
+        "type": "image/png",
+        "sizes": "64x64"
+      },
+      {
+        "src": "/static/icons/icon-96.png",
+        "type": "image/png",
+        "sizes": "96x96"
+      },
+      {
+        "src": "/static/icons/icon-192.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "/static/icons/icon-512.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+  ],
+  "start_url": "/",
+  "display": "fullscreen",
+  "orientation": "portrait"
+}

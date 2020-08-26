@@ -12,12 +12,18 @@
   <link href="/static/assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="/static/assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+  <link rel="manifest" href="/static/manifest.json">
+  <script src='/static/service-worker.js'></script>
+  <link rel="apple-touch-icon" href="/static/icons/icon-96.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
 </head>
 
 {% block body %}
 <body class="" id="body">
   <div class="wrapper">
-    <div class="sidebar position-fixed" style="background: #581b98; height: 420px !important;">
+    <div class="sidebar position-fixed" style="background: #581b98; height: 420px !important;" id="sidebar_body">
       <div class="sidebar-wrapper">
         <div class="logo">
           <a href="javascript:void(0)" class="simple-text logo-mini">
@@ -62,12 +68,18 @@
       </div>
     </div>
     <div class="main-panel">
+      <br>
+      <div id="back_button">
+        <i class="fa fa-arrow-left" id="back_arrow"></i>
+      </div>
       <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent" id="navbar">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <div class="navbar-toggle d-inline">
-              <button type="button" class="navbar-toggler btn togle_btn">
-                <i class="tim-icons icon-align-left-2" id="nav_icon"></i>
+            <div class="navbar-toggle d-inline" style="margin-left: -15px;" id="toggle_navbar">
+              <button type="button" class="navbar-toggler">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
             <a class="navbar-brand" href="javascript:void(0)">Emergency Kit</a>
@@ -121,11 +133,55 @@
       margin-left: -16px !important;
       background: #0f0f20 !important;
     }
+    .main-panel{
+      background: #581b80;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      margin-top: -22px;
+    }
+    .content{
+      background: #581b80;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+    }
+    #back_button{
+      cursor: pointer !important;
+      margin-bottom: -20px;
+    }
+    #back_button i{
+      color: #0f0f20 !important;
+      font-weight: bold;
+      font-size: 20px;
+      cursor: pointer !important;
+      margin-left: 40px;
+    }
+    @media(max-width: 850px){
+      #back_button{
+        display: none !important;
+      }
+    }
+    @media(max-width: 500px){
+      .content{
+        
+      }
+    } 
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="/static/assets/js/core/popper.min.js"></script>
   <script src="/static/assets/js/core/bootstrap.min.js"></script>
+  <script src="/static/assets/js/black-dashboard.min.js?v=1.0.0"></script>
   <script src="/static/js/script.js"></script>
+
+  <script>
+    $(window).on("popstate", function(){
+      $("#body").load(location.href + "#body");
+    });
+    $("#back_arrow").on("click", function(){
+      history.back();
+    });
+  </script>
 </body>
 {% endblock %}
 </html>

@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block body_content %}
+<div class="content">
+	<div class="row">
+		<div class="col-md-7">
+			<div class="card single_post_card">
+				<div class="card-body">
+					<hr>
+					<h5>A(n) {{incidence.name}} occured in Ozuoba at {{incidence.date_added.strftime('%d %b %Y, %I%p')}} </h5>
+					<h5> {{incidence.likers.count()}} Person(s) where affected by the incidence</h5>
+
+                  <form method="POST" id="safe_form">
+                    <div class="form-check form-check-radio">
+                        <label class="form-check-label">
+                          {% if incidence.is_liked_by(current_user) %}
+                            <input class="form-check-input markers" type="radio" name="exampleRadios" id="safe" value="safe" incidence_id="{{incidence.id}}" checked="">
+                              Safe
+                            <span class="form-check-sign"></span>
+                          {% else %}
+                            <input class="form-check-input markers" type="radio" name="exampleRadios" id="safe" value="safe" incidence_id="{{incidence.id}}">
+                              Safe
+                            <span class="form-check-sign"></span>
+                          {% endif %}
+                        </label>
+                    </div>
+                    <div class="form-check form-check-radio">
+                        <label class="form-check-label">
+                          {% if current_user.is_liking(incidence) %}
+                            <input class="form-check-input markers" type="radio" name="exampleRadios" id="not_safe" value="not_safe" incidence_id="{{incidence.id}}">
+                              Not Safe
+                            <span class="form-check-sign"></span>
+                          {% else %}
+                            <input class="form-check-input markers" type="radio" name="exampleRadios" id="not_safe" value="not_safe" incidence_id="{{incidence.id}}" checked="">
+                              Not Safe
+                            <span class="form-check-sign"></span>
+                          {% endif %}
+                        </label>
+                    </div>
+                  </form>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-5">
+			<div class="card comment_card">
+				<div class="card-header">
+					<h4>Please Leave A Comment Here</h4>
+				</div>
+				<div class="card-body">
+					<div class="comment_content">
+						<div class="col-md-9">
+							<div class="card">
+								<div class="card-body">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-9">
+							<div class="card">
+								<div class="card-body">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-9">
+							<div class="card">
+								<div class="card-body">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer">
+					<div class="comment_form_section">
+						<form class="comment_form" method="POST">
+							<textarea class="form-control chat_box" user_id="{{current_user.id}}" rows="1" placeholder="Leave A Comment Here"></textarea>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+.single_post_card{
+	background: #0f0f20;
+}
+.comment_card{
+	background: #0f0f20;
+	height: 350px;
+}
+.chat_box{
+    border: 1px solid #0f0f40 !important;
+    border-radius: 6px !important;
+    transition: 0.2s linear !important;
+    transition-delay: 0.2s linear !important;
+    padding-left: 10px !important;
+}
+.chat_box:focus{
+    border: 1px solid #581b98 !important;
+    transition: 0.2s linear !important;
+    transition-delay: 0.2s linear !important;
+}
+.chat_box::-webkit-scrollbar{
+    width: 8px !important;
+}
+.chat_box::-webkit-scrollbar-track{
+    background: #0f0f20;
+}
+.chat_box::-webkit-scrollbar-thumb{
+    background: #581b98;
+    cursor: pointer !important;
+    border-radius: 10px;
+}
+</style>
+{% endblock %}

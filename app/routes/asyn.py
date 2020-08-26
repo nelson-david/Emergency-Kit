@@ -31,7 +31,8 @@ def add_incidence():
 			author=current_user)
 		all_user = User.query.all()
 		for users in all_user:
-			new_notify = Notifications(carrier_name=current_user.name, carrier_id=current_user.id,\
+			new_notify = Notifications(carrier_name=current_user.name,\
+				carrier_id=current_user.id,\
 				reciever_id=users.id,\
 				action_type="incidence")
 			db.session.add(new_notify)
@@ -97,3 +98,7 @@ def remove_photo():
 	current_user.profile_image = "default.jpg"
 	db.session.commit()
 	return jsonify({'success' : 'true', 'like_num' : 3})
+
+@app.route('/service-worker.js')
+def sw():
+	return app.send_static_file('service-worker.js'), 200, {'Content-Type': 'text/javascript'}

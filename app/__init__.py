@@ -26,5 +26,4 @@ from app.routes.verify import *
 from app.routes.user import *
 from app.routes.asyn import *
 from app.routes.message_routes import *
-from app.routes.alert import *
 

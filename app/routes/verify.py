@@ -42,9 +42,11 @@ def auth_user():
 	user = User.query.filter_by(number=number).first()
 	if user and bcrypt.check_password_hash(user.password, password):
 		if user.account_pend == 1:
+			print("Pending")
 			return jsonify({'error':'pending_account'})
 		else:
 			login_user(user, remember=True)
+			print("No error")
 			return jsonify({'error':'no'})
 	print("Error function")
 	return jsonify({'error':'main_error'})

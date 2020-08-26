@@ -61,8 +61,11 @@
 								<div class="card incidents_card">
 									<div class="card-body">
 										<h5>A(n) {{incidents.name}} occured in Ozuoba at {{incidents.date_added.strftime('%d %b %Y, %I%p')}} </h5>
-
-										<p> {{incidents.likers.count()}} Person(s) where affected by the incidence   <a href="/in"> view details </a></p>
+										<h5> {{incidents.likers.count()}} Person(s) where affected by the incidence   <a href="{{url_for('single_post', id=incidents.id)}}" class="links"> view details </a></h5>
+									</div>
+									<hr>
+									<div class="card-footer it_card_footer">
+										<h5>Announced By <strong><a href="{{url_for('others_profile', id=incidents.author.id)}}" class="links">{{incidents.author.name}}</a></strong></h5>
 									</div>
 								</div>
 							</div>
@@ -268,6 +271,14 @@
 	.internal_card{
 		padding-left: 270px;
 	}
+}
+.it_card_footer{
+	margin-top: -20px;
+	margin-bottom: -20px;
+}
+.links{
+	color: #0f0f20 !important;
+	font-weight: 510;
 }
 </style>
 

@@ -48,3 +48,11 @@ def others_profile(id):
 		return render_template('user/others_profile.html', user=user)
 	else:
 		return redirect(url_for('login'))
+
+@app.route('/post/<id>')
+def single_post(id):
+	if current_user.is_authenticated:
+		incidence = Incidence.query.get_or_404(id)
+		return render_template('posts/single_post.html', incidence=incidence)
+	else:
+		return redirect(url_for('login'))

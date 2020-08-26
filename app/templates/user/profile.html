@@ -41,9 +41,15 @@
               <div class="card-footer">
                 <div class="button-container">
                   <button class="float-left msg_btn to_editprofile"> <i class="tim-icons icon-pencil"></i> <span class="btns_txt">Edit Your Profile</span></button>
-                  <input type="file" name="" id="image" hidden="">
+                  <input type="file" name="" id="image" hidden="" accept="image/*">
                   <label for="image" class="float-right profile_pic_btn"> <i class="tim-icons icon-single-02"></i><span class="btns_txt">Profile Picture</span></label>
                 </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-7">
+            <div class="card" style="background: #0f0f20;">
+              <div class="card-body">
               </div>
             </div>
           </div>
@@ -257,7 +263,8 @@ $("#image").on("change", function(){
     cache : false,
     processData : false,
     success : function(){
-      $("#body").load(location.href + "#profile_picture_div");
+      $("#body").load(location.href + "#body");
+      $("#body").load("#toggle_navbar");
     }
   });
 });
@@ -273,7 +280,9 @@ $("#remove_button").on("click", function(){
 });
 
 $(".to_editprofile").on("click", function(){
-	history.pushState("", "", "/edit/profile");
+	history.pushState("", "", "/edit/profile", function(){
+    document.title("Edit Profile")
+  });
 	$("#body").load(location.href + "#body");
   $("#body").load(location.href + "#navbar");
 });

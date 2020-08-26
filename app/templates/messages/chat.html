@@ -4,8 +4,8 @@
 
 {% block body_content %}
 <div class="content">
-	<div class="row">
-		<div class="col-md-9">
+	<div class="row" id="chat_row">
+		<div class="col-md-9" id="chat_col">
 			<div class="jumbotron" id="main_chat_box">
 				<div class="chat_content" id="chat_content">
 					<div class="row d-flex justify-content-center" id="chat_row">
@@ -16,10 +16,31 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-6 current_user_card col">
+						<div class="col-md-6 current_user_card">
 							<div class="card chat_card">
 								<div class="card-body">
 									<h5 class="chat_text">Hello David Nelson i'm Good, You?</h5>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="card chat_card">
+								<div class="card-body">
+									<h5 class="chat_text">What's up dude, how have you been doing since last week?. I just care about you</h5>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="card chat_card">
+								<div class="card-body">
+									<h5 class="chat_text">What's up dude, how have you been doing since last week?. I just care about you</h5>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="card chat_card current_user_card">
+								<div class="card-body">
+									<h5 class="chat_text">What's up dude, how have you been doing since last week?. I just care about you</h5>
 								</div>
 							</div>
 						</div>
@@ -40,7 +61,7 @@
 <style>
 #main_chat_box{
 	background: #0f0f20;
-	height: 420px !important;
+	height: 415px !important;
 }
 .chat_content{
 	height: 280px;
@@ -111,6 +132,7 @@
 	}
 }
 
+
 @media(max-width: 585px){
 	.chat_card{
 		width: 16rem;
@@ -178,6 +200,7 @@
 	.current_user_card{
 		margin-top: 1px;
 		margin-left: 110px;
+		padding-right: 40px;
 	}
 }
 
@@ -237,15 +260,15 @@
 		var channel = pusher.subscribe('chat-channel');
 
 		channel.bind('new-message', function(data) {
-			let message_template = `<div class="col-md-6 col">
+			let message_template = `<div class="col-md-6 current_user_card">
 										<div class="card chat_card">
 											<div class="card-body">
 												<h5 class="chat_text">${data.message}</h5>
 											</div>
 										</div>
 									</div>`
-
-			$("#chat_row").append(message_template);
+			$("#chat_content").append(message_template);
+			$("#chat_content").load("#chat_content")
 		});
 
 	});
