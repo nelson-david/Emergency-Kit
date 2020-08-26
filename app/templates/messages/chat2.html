@@ -5,8 +5,8 @@
 {% block body_content %}
 
 <div class="content">
-    <div class="row">
-        <div class="col-md-7 col-sm-12 col-lg-7">
+    <div class="row" id="chat_row">
+        <div class="col-md-7 col-sm-12 col-lg-7" id="chat_col">
             <div class="card big_cards clearfix" id="main_chat">
                 <div class="card-body">
                     <p class="text-right choose_colors_text"><i class="fa fa-bars choose_colors_icon"></i></p>
@@ -41,11 +41,14 @@
                                 </div>
                             {% else %}
                                 <div class="col left non_user_col">
+                                    <div style="background-image: url('/static/img/{{message.author.profile_image}}');" class=" upper-img-responsive img-circle group_chat_picture"></div>
                                     <div class="card chat_card non_user_chat_card">
                                         <div class="card-body">
-                                            <div style="background-image: url('/static/img/{{message.author.profile_image}}');" class=" upper-img-responsive img-circle group_chat_picture"></div>
                                             <h5 class="message_author_name"><a href="{{url_for('others_profile', id=message.author.id)}}">{{message.author.name}}</a></h5>
                                             <h5 class="chat_text non_user_chat_text">{{message.body}}</h5>
+                                        </div>
+                                        <div class="message_time">
+                                            <span>{{message.timestamp.strftime('')}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -97,7 +100,8 @@
 .non_user_chat_card{
     background: #581b98;
     width: 55%;
-    border-radius: 5px
+    border-radius: 5px;
+    margin-top: -5px;
 }
 .current_user_chat_card{
     width: 55%;
@@ -110,11 +114,10 @@
     color: #0f0f20 !important;
     font-family: 'Raleway', sans-serif;
     font-size: 13px;
+    white-space: pre-wrap;
 }
 .non_user_chat_text{
-    margin-left: 43px;
-    white-space: pre-wrap;
-    margin-top: -8px;
+    margin-top: 28px;
 }
 .chat_content{
     height: 270px;
@@ -291,15 +294,19 @@
   width: 35px;
   height: 35px;
   position: relative;
-  border: 2px solid #0f0f20;
+  border: 2px solid #0f0f30;
   cursor: pointer;
   margin-bottom: 10px;
 }
 .message_author_name{
-    margin-top: -41px;
-    margin-left: 43px;
+    margin-top: -48px;
+    margin-left: 25px;
     white-space: pre-wrap;
     margin-bottom: 10px;
+}
+#chat_col{
+    padding-left: 0.7px !important;
+    padding-right: 0.7px !important;
 }
 </style>
 
@@ -350,7 +357,9 @@ $(".yellow_color").on("click", function(){
 <script>
     //$("#chat_content").scrollTop($("#chat_content").height());
 
-    $('#chat_content').scrollTop($('#chat_content')[0].scrollHeight);
+    $(document).ready(function(){
+        $('#chat_content').scrollTop($('#chat_content')[0].scrollHeight);
+    });
 
     $("#chat_form").on("submit", function(e){
         e.preventDefault();
@@ -363,32 +372,43 @@ $(".yellow_color").on("click", function(){
             data: {'message':message_sent},
             success: function(){
                 $('.message_box').val('');
+            }
+        });
 
-                var pusher = new Pusher('2281811cac7fdcfac988', {
-                    cluster: 'us2',
-                    encypted: true
-                });
+        /*var pusher = new Pusher('2281811cac7fdcfac988', {
+            cluster: 'us2',
+            encypted: true
+        });
 
-                var channel = pusher.subscribe('chat-channel');
+        var channel = pusher.subscribe('chat-channel');
 
-                channel.bind('new-message', function(data){
-                    alert("sent");
-                    let message_template = `<div class="col right current_user_col">
+        channel.bind('new-message', function(data){
+            let message_template = `<div class="col right current_user_col">
                                                 <div class="card current_user_chat_card">
                                                     <div class="card-body">
                                                         <p class="chat_text">${data.message}</p>
                                                     </div>
                                                 </div>
                                             </div>`
-                    //$("#chat_content").scrollTop($("#chat_content").height());
-                    $(".typing_text").remove();
-                    $("#body").load("#body");
-                    //$("#chat_content").append(message_template);
-                    $('#chat_content').scrollTop($('#chat_content')[0].scrollHeight);
-                    //$("#chat_content").scrollTop($("#chat_content").height()); 
-                });
-            }
-        });
+            //$("#chat_content").scrollTop($("#chat_content").height());
+            $(".typing_text").remove();
+            $("#body").load("#body");
+            //$("#chat_content").append(message_template);
+            $('#chat_content').scrollTop($('#chat_content')[0].scrollHeight);
+            //$("#chat_content").scrollTop($("#chat_content").height());
+        });*/
+
+    });
+
+    var pusher = new Pusher('d301eb00c00912993892', {
+        cluster: 'eu',
+        encrypted: true
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+        $("#body").load("#body");
+        $('#chat_content').scrollTop($('#chat_content')[0].scrollHeight);
     });
 
         /*$.post('/sending', {'message':message_sent, 'id':id}, function(){

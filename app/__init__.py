@@ -15,10 +15,10 @@ migrate = Migrate(app, db)
 login_manager.login_view = "login"
 
 pusher_client = pusher.Pusher(
-	app_id='1059936',
-	key='2281811cac7fdcfac988',
-	secret='ede1e7c4e52ea80c4adf',
-	cluster='us2',
+	app_id='1061860',
+	key='d301eb00c00912993892',
+	secret='7eac33b7b64a5b368277',
+	cluster='eu',
 	ssl=True
 )
 

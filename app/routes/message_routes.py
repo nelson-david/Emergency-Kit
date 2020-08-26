@@ -11,17 +11,11 @@ def single_message():
 
 @app.route('/sending', methods=['POST'])
 def sending():
-	message = request.form['message']
-	new_msg = Message(author=current_user, body=message)
+	new_msg = Message(author=current_user, body=request.form['message'])
+	pusher_client.trigger('my-channel', 'my-event', {'message': request.form['message']})
 	db.session.add(new_msg)
 	db.session.commit()
-	try:
-		pusher_client.trigger('chat-channel', 'new-message', {'message': message})
-		print(pusher_client)
-		return jsonify({'success':'true'})
-	except Exception as exc:
-		print(exc)
-		return jsonify({'success':'false'})
+	return jsonify({'success':'true'})
 
 @app.route('/check_typing', methods=['POST'])
 def check_typing():
