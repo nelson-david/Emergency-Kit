@@ -112,6 +112,6 @@ def sw():
 	return app.send_static_file('service-worker.js'), 200, {'Content-Type': 'text/javascript'}
 
 
-@app.route('/.well-known/')
+@app.route('/.well-known/assetlinks.json')
 def assets():
 	return app.send_static_file('assetlinks.json')
