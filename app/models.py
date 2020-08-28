@@ -6,10 +6,10 @@ from datetime import datetime
 def load_user(id):
 	return User.query.get(int(id))
 
-class Like(db.Model):
-	__tablename__ = "likes"
-	liker_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
-	liked_id = db.Column(db.Integer, db.ForeignKey('incidence.id'), primary_key=True)
+class Marking(db.Model):
+	__tablename__ = "marking"
+	marker_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+	marked_id = db.Column(db.Integer, db.ForeignKey('incidence.id'), primary_key=True)
 	timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
 class User(UserMixin, db.Model):
@@ -29,7 +29,7 @@ class User(UserMixin, db.Model):
 	comment = db.relationship("Comment", backref="comm_ent", lazy=True)
 	message_sent = db.relationship("Message", backref="author", lazy=True)
 
-	liked = db.relationship('Like', foreign_keys=[Like.liker_id],\
+	marked = db.relationship('Marking', foreign_keys=[Marking.marker_id],\
 		backref=db.backref('liker', lazy='joined'), lazy='dynamic',\
 		cascade='all, delete-orphan')
 
@@ -43,19 +43,19 @@ class User(UserMixin, db.Model):
 	def __repr__(self):
 		return f" {self.name}, {self.number}, {self.profile_image}, {self.date_joined}"
 
-	def like(self, user):
-		if not self.is_liking(user):
-			f = Like(liker=self, liked=user)
+	def mark(self, user):
+		if not self.is_marking(user):
+			f = Marking(marker=self, marked=user)
 			db.session.add(f)
 
-	def unlike(self, user):
-		f = self.liked.filter_by(liked_id=user.id).first()
+	def unmark(self, user):
+		f = self.marked.filter_by(marked_id=user.id).first()
 		if f:
 			db.session.delete(f)
 
-	def is_liking(self, user):
-		return self.liked.filter_by(
-			liked_id=user.id).first() is not None
+	def is_marking(self, user):
+		return self.marked.filter_by(
+			marked_id=user.id).first() is not None
 
 class Incidence(db.Model):
 	id = db.Column(db.Integer, primary_key=True, unique=True)
@@ -66,13 +66,13 @@ class Incidence(db.Model):
 	safes = db.relationship("Safe", backref="marked_incidence", lazy=True)
 	comments = db.relationship("Comment", backref="commenter", lazy=True)
 
-	likers = db.relationship('Like', foreign_keys=[Like.liked_id],\
-		backref=db.backref('liked', lazy='joined'), lazy='dynamic',\
+	markers = db.relationship('Marking', foreign_keys=[Marking.marked_id],\
+		backref=db.backref('marked', lazy='joined'), lazy='dynamic',\
 		cascade='all, delete-orphan')
 
-	def is_liked_by(self, pst):
-		return self.likers.filter_by(
-			liker_id=pst.id).first() is not None
+	def is_marked_by(self, pst):
+		return self.markers.filter_by(
+			marker_id=pst.id).first() is not None
 
 	def __repr__(self):
 		return f" {self.name}, {self.date_added}"

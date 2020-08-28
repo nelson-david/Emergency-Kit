@@ -2,7 +2,7 @@ from app import app, db
 from flask import redirect, url_for, render_template, request, jsonify, flash
 from flask_login import current_user, logout_user
 
-from app.models import Incidence, User
+from app.models import Incidence, User, Notifications
 from datetime import datetime
 import secrets
 
@@ -56,3 +56,9 @@ def single_post(id):
 		return render_template('posts/single_post.html', incidence=incidence)
 	else:
 		return redirect(url_for('login'))
+
+
+@app.route('/alerts')
+def alerts():
+	notify = Notifications.query.filter_by(reciever_id=current_user.id).all()
+	return render_template('alert/notify.html', notify=notify)
