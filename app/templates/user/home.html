@@ -3,7 +3,7 @@
 {% block title %}Home{% endblock %}
 
 {% block body_content %}
-  {% if current_user.user_type == "it_admin" %}
+  {% if current_user.user_type == "it_admin" or current_user.user_type == "gov_worker" %}
         {% include 'user/it_admins.html' %}
   {% endif%}
   {% if current_user.user_type == "citizen" %}
