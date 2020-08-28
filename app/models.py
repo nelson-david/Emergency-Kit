@@ -30,7 +30,7 @@ class User(UserMixin, db.Model):
 	message_sent = db.relationship("Message", backref="author", lazy=True)
 
 	marked = db.relationship('Marking', foreign_keys=[Marking.marker_id],\
-		backref=db.backref('liker', lazy='joined'), lazy='dynamic',\
+		backref=db.backref('marker', lazy='joined'), lazy='dynamic',\
 		cascade='all, delete-orphan')
 
 	notify_carrier = db.relationship('Notifications',\

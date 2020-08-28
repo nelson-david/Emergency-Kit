@@ -40,10 +40,57 @@
               </div>
               <div class="card-footer">
                 <div class="button-container">
-                  <a href="{{url_for('single_message', id=user.id)}}" class="float-center msg_btn"> <i class="tim-icons icon-email-85"></i> Community Room</a>
+                  <a href="javascript:void(0)" class="float-center msg_btn"> <i class="tim-icons icon-email-85"></i> Community Room</a>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            {% for incidence in users_post %}
+            <div class="card ic_card" style="background: #0f0f24;">
+              <div class="card-body" style="margin-top: 15px;">
+                <h5>There was a(n) {{ incidence.name }} in {{incidence.location.title()}} at {{incidence.date_added.strftime('%d %b %Y, %I%p')}} </h5>
+                <div class="safe">
+                  <p>Identify Your Condition On this Disaster</p>
+
+                  <form method="POST" id="safe_form">
+                    <div class="form-check form-check-radio">
+                        <label class="form-check-label">
+                          {% if incidence.is_marked_by(current_user) %}
+                            <input class="form-check-input markers" type="radio" name="exampleRadios" id="safe" value="safe" incidence_id="{{incidence.id}}" checked="">
+                              Safe
+                            <span class="form-check-sign"></span>
+                          {% else %}
+                            <input class="form-check-input markers" type="radio" name="exampleRadios" id="safe" value="safe" incidence_id="{{incidence.id}}">
+                              Safe
+                            <span class="form-check-sign"></span>
+                          {% endif %}
+                        </label>
+                    </div>
+                    <div class="form-check form-check-radio">
+                        <label class="form-check-label">
+                          {% if current_user.is_marking(incidence) %}
+                            <input class="form-check-input markers" type="radio" name="exampleRadios" id="not_safe" value="not_safe" incidence_id="{{incidence.id}}">
+                              Not Safe
+                            <span class="form-check-sign"></span>
+                          {% else %}
+                            <input class="form-check-input markers" type="radio" name="exampleRadios" id="not_safe" value="not_safe" incidence_id="{{incidence.id}}" checked="">
+                              Not Safe
+                            <span class="form-check-sign"></span>
+                          {% endif %}
+                        </label>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <hr>
+              <div class="card-footer" style="margin-top: -20px; margin-bottom: -10px;">
+                <p class="text-center">This incident was announced by <span style="font-weight: 400;">{{incidence.author.name}}</span> : <a href="{{url_for('single_post', id=incidence.id)}}" class="links"> view details </a></h5> </p>
+              </div>
+            </div>
+            {% endfor %}
           </div>
         </div>
       </div>
@@ -180,6 +227,25 @@
 } 
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  $(".markers").on("click", function(){
+    var check = $(this).val();
+    var incidence_id = $(this).attr("incidence_id")
+    if ( check == "safe" ){
+      req = $.ajax({
+        url: '/mark_safe',
+        type: 'post',
+        data: {'incidence_id':incidence_id}
+      });
+    }else{
+      req = $.ajax({
+        url: '/mark_unsafe',
+        type: 'post',
+        data: {'incidence_id':incidence_id}
+      });
+    }
+  });
+</script>
 <script>
 $(".to_editprofile").on("click", function(){
 	history.pushState("", "", "/message/");

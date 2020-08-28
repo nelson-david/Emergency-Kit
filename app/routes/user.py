@@ -45,7 +45,8 @@ def others_profile(id):
 		user = User.query.get_or_404(id)
 		if user == current_user:
 			return redirect(url_for('profile'))
-		return render_template('user/others_profile.html', user=user)
+		users_post = Incidence.query.filter_by(author=user).all()
+		return render_template('user/others_profile.html', user=user, users_post=users_post)
 	else:
 		return redirect(url_for('login'))
 

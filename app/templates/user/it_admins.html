@@ -47,9 +47,6 @@
 						<a href="javascript:void(0)" class="admin_dashboard" id="toggle_incidents">Incidents</a>
 						<a href="javascript:void(0)" class="admin_dashboard" id="toggle_users">Users</a>
 						<a href="javascript:void(0)" class="admin_dashboard" id="toggle_admins">Admins</a>
-						<a href="javascript:void(0)" class="admin_dashboard" id="toggle_settings">Settings</a>
-						<a href="javascript:void(0)" class="admin_dashboard" id="toggle_updates">Updates</a>
-						<a href="javascript:void(0)" class="admin_dashboard" id="toggle_issues">Issues</a>
 					</div>
 				</div>
 			</div>
@@ -61,7 +58,7 @@
 								<div class="card incidents_card">
 									<div class="card-body">
 										<h5>A(n) {{incidents.name}} occured in Ozuoba at {{incidents.date_added.strftime('%d %b %Y, %I%p')}} </h5>
-										<h5> {{incidents.likers.count()}} Person(s) where affected by the incidence   <a href="{{url_for('single_post', id=incidents.id)}}" class="links"> view details </a></h5>
+										<h5> {{incidents.markers.count()}} Person(s) where affected by the incidence   <a href="{{url_for('single_post', id=incidents.id)}}" class="links"> view details </a></h5>
 									</div>
 									<hr>
 									<div class="card-footer it_card_footer">

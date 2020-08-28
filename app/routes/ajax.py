@@ -21,7 +21,7 @@ Incidence database, and marks the user safe of that incidence"""
 def mark_safe():
 	#Querying the incidence database using the id recieved from Jquery
 	incidence = Incidence.query.filter_by(id=request.form['incidence_id']).first()
-	current_user.like(incidence)
+	current_user.mark(incidence)
 	db.session.commit()
 	"""Returning jsonify does nothing much, 
 	we just use it to stop the server from throwing an error."""
@@ -32,7 +32,7 @@ marks the user unsafe."""
 @app.route("/mark_unsafe", methods=["POST"])
 def mark_unsafe():
 	incidence = Incidence.query.filter_by(id=request.form['incidence_id']).first()
-	current_user.unlike(incidence)
+	current_user.unmark(incidence)
 	db.session.commit()
 	"""Returning jsonify does nothing much, 
 	we just use it to stop the server from throwing an error."""
@@ -45,8 +45,8 @@ By recieving form data from JQuery containing name, location, and author"""
 def add_incidence():
 	new_incidence = Incidence(name=request.form['name'],\
 		location=request.form['location'], author=current_user)
-		"""Here we just query all the users, 
-		then add a notification for all of them"""
+	"""Here we just query all the users, 
+	then add a notification for all of them"""
 	all_user = User.query.all()
 	for users in all_user:
 		new_notify = Notifications(carrier_name=current_user.name,\

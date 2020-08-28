@@ -14,5 +14,5 @@ migrate = Migrate(app, db)
 login_manager.login_view = "login"
 
 from app.routes.verify import *
+from app.routes.ajax import *
 from app.routes.user import *
-from app.routes.async import 

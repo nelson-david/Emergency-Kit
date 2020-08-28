@@ -138,7 +138,7 @@
                   <form method="POST" id="safe_form">
                     <div class="form-check form-check-radio">
                         <label class="form-check-label">
-                          {% if incidents.is_liked_by(current_user) %}
+                          {% if incidents.is_marked_by(current_user) %}
                             <input class="form-check-input markers" type="radio" name="exampleRadios" id="safe" value="safe" incidence_id="{{incidents.id}}" checked="">
                               Safe
                             <span class="form-check-sign"></span>
@@ -151,7 +151,7 @@
                     </div>
                     <div class="form-check form-check-radio">
                         <label class="form-check-label">
-                          {% if current_user.is_liking(incidents) %}
+                          {% if current_user.is_marking(incidents) %}
                             <input class="form-check-input markers" type="radio" name="exampleRadios" id="not_safe" value="not_safe" incidence_id="{{incidents.id}}">
                               Not Safe
                             <span class="form-check-sign"></span>

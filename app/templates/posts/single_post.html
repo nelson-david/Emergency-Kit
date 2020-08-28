@@ -10,12 +10,12 @@
 				<div class="card-body">
 					<hr>
 					<h5>A(n) {{incidence.name}} occured in Ozuoba at {{incidence.date_added.strftime('%d %b %Y, %I%p')}} </h5>
-					<h5> {{incidence.likers.count()}} Person(s) where affected by the incidence</h5>
+					<h5> {{incidence.markers.count()}} Person(s) where affected by the incidence</h5>
 
                 	<form method="POST" id="safe_form">
 	                    <div class="form-check form-check-radio">
 	                        <label class="form-check-label">
-	                          {% if incidence.is_liked_by(current_user) %}
+	                          {% if incidence.is_marked_by(current_user) %}
 	                            <input class="form-check-input markers" type="radio" name="exampleRadios" id="safe" value="safe" incidence_id="{{incidence.id}}" checked="">
 	                              Safe
 	                            <span class="form-check-sign"></span>
@@ -28,7 +28,7 @@
 	                    </div>
 	                    <div class="form-check form-check-radio">
 	                        <label class="form-check-label">
-	                          {% if current_user.is_liking(incidence) %}
+	                          {% if current_user.is_marking(incidence) %}
 	                            <input class="form-check-input markers" type="radio" name="exampleRadios" id="not_safe" value="not_safe" incidence_id="{{incidence.id}}">
 	                              Not Safe
 	                            <span class="form-check-sign"></span>
